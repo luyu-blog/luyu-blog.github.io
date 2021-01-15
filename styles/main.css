@@ -312,7 +312,6 @@ body {
   color: rgba(0, 0, 0, 0.86);
   font: 400 16px/1.42 "demo";
   letter-spacing: 0.05em;
-  cursor: url(1.cur), auto;
 }
 a {
   color: rgba(0, 0, 0, 0.98);
