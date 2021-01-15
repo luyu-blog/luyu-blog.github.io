@@ -217,6 +217,10 @@ summary {
   margin: 0;
   padding: 0;
 }
+@font-face {
+  font-family: demo;
+  src: url("demo.ttf");
+}
 html,
 body,
 div,
@@ -306,8 +310,9 @@ html {
 }
 body {
   color: rgba(0, 0, 0, 0.86);
-  font: 400 16px/1.42 -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
+  font: 400 16px/1.42 "demo";
   letter-spacing: 0.05em;
+  cursor: url(1.cur), auto;
 }
 a {
   color: rgba(0, 0, 0, 0.98);
@@ -998,3 +1003,29 @@ td {
 .hljs-strong {
   font-weight: bold;
 }
+
+      .main {
+        max-width: 1500px;
+      }
+    
+      .post-detail .post .post-content p {
+        font-size: 30px;
+      }
+    
+      .post-container .post .post-title {
+        text-align: center;
+      }
+      .post-container .post .post-info {
+        text-align: center;
+      }
+      .post-detail .post .post-title {
+        text-align: center;
+      }
+      .post-detail .post .post-info {
+        text-align: center;
+      }
+    
+      h1,a,p,h2,h3,h4,span  {
+        font-family: demo;
+      }
+    
