@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python WEB框架 Flask | 中国好青年</title>
-<link rel="shortcut icon" href="https://luyu-blog.github.io/favicon.ico?v=1610867275571">
+<link rel="shortcut icon" href="https://luyu-blog.github.io/favicon.ico?v=1610971052818">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://luyu-blog.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Python WEB框架 Flask | 中国好青年 - Atom Feed" href="https://luyu-blog.github.io/atom.xml">
@@ -11,8 +11,14 @@
 
 
 
-    <meta name="description" content="adasdas
-" />
+    <meta name="description" content="
+errorhandler绑定错误的状态码
+
+@app.errorhandler(404)
+def error_404(arg):
+	return render_tmeplate(&quot;404.html&quot;)
+
+..." />
     <meta name="keywords" content="代码" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -22,7 +28,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://luyu-blog.github.io">
-  <img class="avatar" src="https://luyu-blog.github.io/images/avatar.png?v=1610867275571" alt="">
+  <img class="avatar" src="https://luyu-blog.github.io/images/avatar.png?v=1610971052818" alt="">
   </a>
   <h1 class="site-title">
     中国好青年
@@ -93,7 +99,13 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>adasdas</p>
+                <blockquote>
+<p>errorhandler绑定错误的状态码</p>
+</blockquote>
+<pre><code class="language-python">@app.errorhandler(404)
+def error_404(arg):
+	return render_tmeplate(&quot;404.html&quot;)
+</code></pre>
 
               </div>
               <div class="toc-container">
