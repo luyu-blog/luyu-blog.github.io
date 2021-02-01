@@ -2,32 +2,21 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>通过网站安装主题 插件 | 中国好青年</title>
+<title>Tomcat学习 | 中国好青年</title>
 <link rel="shortcut icon" href="https://luyu-blog.github.io/favicon.ico?v=1612157372741">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://luyu-blog.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="通过网站安装主题 插件 | 中国好青年 - Atom Feed" href="https://luyu-blog.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Tomcat学习 | 中国好青年 - Atom Feed" href="https://luyu-blog.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-网站安装主题 插件：
-
-
-
-打开要进行安装主题插件的编程工具（Pycharm（python）、Intell（java））
-
-
-网站打开如下 :
-
-
-
-
-如果网站是如下显示get按钮  请确认编程工具已打开   然后刷新网站 即可 ：
-
-
-..." />
+    <meta name="description" content="1.Tomcat目录结束
+bin				存放Tomcat服务器的可执行程序
+conf				Tomcat服务器的配置文件
+lib					Tomcat服务器的jar包
+logs				Tomcat服务器运行时输出的日记信息
+temp				..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -90,11 +79,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              通过网站安装主题 插件
+              Tomcat学习
             </h2>
             <div class="post-info">
               <span>
-                2021-01-15
+                2021-02-01
               </span>
               <span>
                 1 min read
@@ -104,35 +93,60 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>网站安装主题 插件：</p>
-</blockquote>
-<ul>
-<li>
-<p>打开要进行安装主题插件的编程工具（Pycharm（python）、Intell（java））</p>
-</li>
-<li>
-<p>网站打开如下 :</p>
-</li>
-</ul>
-<figure data-type="image" tabindex="1"><img src="https://luyu-blog.github.io/post-images/1610689452490.png" alt="" loading="lazy"></figure>
-<ul>
-<li>如果网站是如下显示get按钮  请确认编程工具已打开   然后刷新网站 即可 ：</li>
-</ul>
-<figure data-type="image" tabindex="2"><img src="https://luyu-blog.github.io/post-images/1610689488875.png" alt="" loading="lazy"></figure>
-<ul>
-<li>然后Intell 就弹出安装窗口 点击ok即可  有些主题插件 需要重启软件  才能显示效果：</li>
-</ul>
-<figure data-type="image" tabindex="3"><img src="https://luyu-blog.github.io/post-images/1610689526210.png" alt="" loading="lazy"></figure>
+                <h3 id="1tomcat目录结束">1.Tomcat目录结束</h3>
+<pre><code>bin				存放Tomcat服务器的可执行程序
+conf				Tomcat服务器的配置文件
+lib					Tomcat服务器的jar包
+logs				Tomcat服务器运行时输出的日记信息
+temp				Tomcat运行时产生的临时数据
+webapps			存放部署的Web工程
+work				work目录用来存放tomcat在运行时的编译后文件，例如JSP编译后的文件。清空work目录，然后重启tomcat，可以达到清除缓存的作用
+</code></pre>
+<h3 id="2启动tomcat">2.启动Tomcat</h3>
+<p>1.以windows为例：运行Tomcat bin目录里的startup.bat  启动tomcat</p>
+<h4 id="启动成功">启动成功</h4>
+<p>可通过浏览器访问    127.0.0.1:8080或localhost:8080 进行测试</p>
+<h4 id="启动失败">启动失败</h4>
+<p>配置JAVA_HOME环境变量：</p>
+<p>右键计算机-属性-高级系统设置-环境变量-点击系统变量下的新建</p>
+<p>变量名为：JAVA_HOME   必须大写</p>
+<p>变量值为：jdk安装之后的路径</p>
+<figure data-type="image" tabindex="1"><img src="https://luyu-blog.github.io/post-images/1612157170519.png" alt="" loading="lazy"></figure>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1tomcat%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9D%9F">1.Tomcat目录结束</a></li>
+<li><a href="#2%E5%90%AF%E5%8A%A8tomcat">2.启动Tomcat</a>
+<ul>
+<li><a href="#%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F">启动成功</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5">启动失败</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://luyu-blog.github.io/GkLFegACB/">
+              <h3 class="post-title">
+                锻炼计划
+              </h3>
+            </a>
+          </div>
         
 
         
