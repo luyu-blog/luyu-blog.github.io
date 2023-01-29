@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Docker安装推荐文章：Docker 容器入门 - 惨绿少年 - 博客园 (cnblogs.com) 123456789101112131415#安装需要的软件包，yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的yum install -y yum-utils device-mapper-persistent-date lvm2 #设置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker学习笔记">
+<meta property="og:url" content="http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Tom">
+<meta property="og:description" content="Docker安装推荐文章：Docker 容器入门 - 惨绿少年 - 博客园 (cnblogs.com) 123456789101112131415#安装需要的软件包，yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的yum install -y yum-utils device-mapper-persistent-date lvm2 #设置">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/upload/2022/04/1665960979.png">
+<meta property="og:image" content="http://example.com/upload/2022/07/Docker_network_host.png">
+<meta property="og:image" content="http://example.com/upload/2022/07/Docker_network_container.png">
+<meta property="og:image" content="http://example.com/upload/2022/07/Docker_network_none.png">
+<meta property="og:image" content="http://example.com/upload/2022/07/Docker_network_bridge.png">
+<meta property="article:published_time" content="2023-01-29T09:51:23.000Z">
+<meta property="article:modified_time" content="2023-01-29T09:52:48.646Z">
+<meta property="article:author" content="Tom">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/upload/2022/04/1665960979.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Docker学习笔记</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/01/29/Docker-Compose%E5%AE%B9%E5%99%A8%E7%BC%96%E6%8E%92/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/01/29/nginx%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&text=Docker学习笔记"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Docker学习笔记"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&is_video=false&description=Docker学习笔记"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Docker学习笔记&body=Check out this article: http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Docker学习笔记"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Docker学习笔记"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Docker学习笔记"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Docker学习笔记"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&name=Docker学习笔记&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&t=Docker学习笔记"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">Docker安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F"><span class="toc-number">2.</span> <span class="toc-text">Docker镜像加速</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">3.</span> <span class="toc-text">Docker生命周期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E5%91%BD%E4%BB%A4"><span class="toc-number">4.</span> <span class="toc-text">Docker命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E7%9B%B8%E5%85%B3"><span class="toc-number">4.1.</span> <span class="toc-text">镜像相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2"><span class="toc-number">4.1.1.</span> <span class="toc-text">搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD-x2F-%E6%8B%89%E5%8F%96"><span class="toc-number">4.1.2.</span> <span class="toc-text">下载&#x2F;拉取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%88%97%E8%A1%A8"><span class="toc-number">4.1.3.</span> <span class="toc-text">镜像列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E6%A0%87%E7%AD%BE"><span class="toc-number">4.1.4.</span> <span class="toc-text">镜像标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%88%A0%E9%99%A4"><span class="toc-number">4.1.5.</span> <span class="toc-text">镜像删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%AF%BC%E5%87%BA"><span class="toc-number">4.1.6.</span> <span class="toc-text">镜像导出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%AF%BC%E5%85%A5"><span class="toc-number">4.1.7.</span> <span class="toc-text">镜像导入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E7%9B%B8%E5%85%B3"><span class="toc-number">4.2.</span> <span class="toc-text">容器相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%B9%E5%99%A8"><span class="toc-number">4.2.1.</span> <span class="toc-text">创建容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E5%88%97%E8%A1%A8"><span class="toc-number">4.2.2.</span> <span class="toc-text">容器列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E5%AE%B9%E5%99%A8"><span class="toc-number">4.2.3.</span> <span class="toc-text">关闭容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">4.2.4.</span> <span class="toc-text">启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">4.2.5.</span> <span class="toc-text">重启容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E5%88%A0%E9%99%A4"><span class="toc-number">4.2.6.</span> <span class="toc-text">容器删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97"><span class="toc-number">4.2.7.</span> <span class="toc-text">容器日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E8%BD%AC%E9%95%9C%E5%83%8F"><span class="toc-number">4.2.8.</span> <span class="toc-text">容器转镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%BF%A1%E6%81%AF"><span class="toc-number">4.2.9.</span> <span class="toc-text">容器信息</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DockerFile"><span class="toc-number">5.</span> <span class="toc-text">DockerFile</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E7%BD%91%E7%BB%9C"><span class="toc-number">6.</span> <span class="toc-text">Docker网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F"><span class="toc-number">6.1.</span> <span class="toc-text">网络模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Host"><span class="toc-number">6.1.1.</span> <span class="toc-text">Host</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Container"><span class="toc-number">6.1.2.</span> <span class="toc-text">Container</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#None"><span class="toc-number">6.1.3.</span> <span class="toc-text">None</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bridge"><span class="toc-number">6.1.4.</span> <span class="toc-text">bridge</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Docker学习笔记
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Tom</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-29T09:51:23.000Z" itemprop="datePublished">2023-01-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h1><p>推荐文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/clsn/p/8410309.html#auto-id-21">Docker 容器入门 - 惨绿少年 - 博客园 (cnblogs.com)</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装需要的软件包，yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的</span></span><br><span class="line">yum install -y yum-utils device-mapper-persistent-date lvm2</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment">#设置yum源</span></span><br><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment">#安装docker</span></span><br><span class="line">yum install -y docker-ce</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看docker版本，验证是否安装成功</span></span><br><span class="line">docker -v</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Docker镜像加速"><a href="#Docker镜像加速" class="headerlink" title="Docker镜像加速"></a>Docker镜像加速</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 阿里云镜像获取地址：https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p /etc/docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">tee</span> /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://dwpobk77.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Docker生命周期"><a href="#Docker生命周期" class="headerlink" title="Docker生命周期"></a>Docker生命周期</h1><p><img src="/upload/2022/04/1665960979.png" alt="1665960979"></p>
+<h1 id="Docker命令"><a href="#Docker命令" class="headerlink" title="Docker命令"></a>Docker命令</h1><h2 id="镜像相关"><a href="#镜像相关" class="headerlink" title="镜像相关"></a>镜像相关</h2><h3 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker search 镜像名称</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@docker ~]<span class="comment"># docker search nginx</span></span><br><span class="line">NAME                                              DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</span><br><span class="line">nginx                                             Official build of Nginx.                        16597     [OK]</span><br><span class="line">bitnami/nginx                                     Bitnami nginx Docker Image                      121                  [OK]</span><br><span class="line">ubuntu/nginx                                      Nginx, a high-performance reverse proxy &amp; we…   39</span><br><span class="line">bitnami/nginx-ingress-controller                  Bitnami Docker Image <span class="keyword">for</span> NGINX Ingress Contr…   17                   [OK]</span><br><span class="line">rancher/nginx-ingress-controller                                                                  10</span><br><span class="line">ibmcom/nginx-ingress-controller                   Docker Image <span class="keyword">for</span> IBM Cloud Private-CE (Commu…   4</span><br><span class="line">bitnami/nginx-ldap-auth-daemon                                                                    3</span><br><span class="line">bitnami/nginx-exporter                                                                            2</span><br><span class="line">circleci/nginx                                    This image is <span class="keyword">for</span> internal use                  2</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="下载-x2F-拉取"><a href="#下载-x2F-拉取" class="headerlink" title="下载&#x2F;拉取"></a>下载&#x2F;拉取</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker pull 名称:版本</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@docker ~]<span class="comment"># docker pull nginx:1.21.6</span></span><br><span class="line">1.21.6: Pulling from library/nginx</span><br><span class="line">c229119241af: Pull complete</span><br><span class="line">2215908dc0a2: Pull complete</span><br><span class="line">08c3cb2073f1: Pull complete</span><br><span class="line">18f38162c0ce: Pull complete</span><br><span class="line">10e2168f148a: Pull complete</span><br><span class="line">c4ffe9532b5f: Pull complete</span><br><span class="line">Digest: sha256:2275af0f20d71b293916f1958f8497f987b8d8fd8113df54635f2a5915002bf1</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> nginx:1.21.6</span><br><span class="line">docker.io/library/nginx:1.21.6</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="镜像列表"><a href="#镜像列表" class="headerlink" title="镜像列表"></a>镜像列表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@docker ~]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY                                                        TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">nginx                                                             1.21.6    12766a6745ee   10 days ago    142MB</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="镜像标签"><a href="#镜像标签" class="headerlink" title="镜像标签"></a>镜像标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker tag [imagesID] 改后名称:改后tag</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@docker ~]<span class="comment"># docker tag nginx:1.21.6 mynginx:1.21.6</span></span><br><span class="line">[root@docker ~]<span class="comment"># docker images |grep nginx</span></span><br><span class="line">mynginx                                                           1.21.6    12766a6745ee   10 days ago    142MB</span><br><span class="line">nginx                                                             1.21.6    12766a6745ee   10 days ago    142MB</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="镜像删除"><a href="#镜像删除" class="headerlink" title="镜像删除"></a>镜像删除</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@docker ~]<span class="comment"># docker rmi mynginx:1.21.6</span></span><br><span class="line">Untagged: mynginx:1.21.6</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="镜像导出"><a href="#镜像导出" class="headerlink" title="镜像导出"></a>镜像导出</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker save 镜像id/镜像名 &gt; 名字.tar</span></span><br><span class="line"></span><br><span class="line">[root@docker ~]<span class="comment"># docker save nginx:1.21.6 &gt; nginx-v1.21.6.tar</span></span><br><span class="line">[root@docker ~]<span class="comment"># ls</span></span><br><span class="line">nginx-v1.21.6.tar</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="镜像导入"><a href="#镜像导入" class="headerlink" title="镜像导入"></a>镜像导入</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker load &lt; nginx-v1.21.6.tar</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="容器相关"><a href="#容器相关" class="headerlink" title="容器相关"></a>容器相关</h2><h3 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Docker run [options] image [<span class="built_in">command</span>] [arg]</span><br><span class="line"></span><br><span class="line">Option说明:</span><br><span class="line">-d         后台运行</span><br><span class="line">-i        以交互模式运行容器,通常与-t同时使用</span><br><span class="line">-t         为容器重新分配一个伪输出终端,通常与-i同时使用</span><br><span class="line">--name     设置容器名字</span><br><span class="line">--net    指定网络连接类型</span><br><span class="line">--h     设置主机名称</span><br><span class="line">--dns    指定容器的dns服务器,默认和宿主一致</span><br><span class="line">-e        设置环境变量(**=”**”)</span><br><span class="line">-p         本地端口:容器端口     把容器的某个端口暴露到主机的某个端口</span><br><span class="line">-v        本地目录:容器目录     把主机的某目录挂载到容器的目录里面实现文件系统的链接</span><br><span class="line">--network   指定网络</span><br><span class="line">--<span class="built_in">rm</span>    容器关闭后自动删除</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--restart=always <span class="comment">#自动启动</span></span><br><span class="line"><span class="comment">#启动策略：</span></span><br><span class="line">      no,默认策略,在容器退出时不重启容器.</span><br><span class="line"></span><br><span class="line">      on-failure ,在容器非正常退出时(退出状态非0),才会重启容器</span><br><span class="line"></span><br><span class="line">      on-failure:3,在容器非正常退出时重启容器,最多重启3次</span><br><span class="line"></span><br><span class="line">      always ,在容器退出时总是重启容器.</span><br><span class="line"></span><br><span class="line">      unless-stopped,在容器退出时总是重启容器,但是不考虑在Docker守护进程启动时就已经停止了的容器。</span><br><span class="line"></span><br><span class="line">如果创建时未指定--restart=always ,可通过update命令设置</span><br><span class="line"></span><br><span class="line">语法: docker update --restart=always 容器<span class="built_in">id</span>或名字</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="容器列表"><a href="#容器列表" class="headerlink" title="容器列表"></a>容器列表</h3><p>使用命令:”docker ps”来查看已经启动的容器，如果有停止运行的容器可以添加’-a’参数来查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@docker ~]<span class="comment"># docker ps</span></span><br><span class="line">CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                                   NAMES</span><br><span class="line">4cf61416ee67   nginx     <span class="string">&quot;/docker-entrypoint.…&quot;</span>   3 minutes ago   Up 3 minutes   0.0.0.0:8080-&gt;80/tcp, :::8080-&gt;80/tcp   nginx1</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="关闭容器"><a href="#关闭容器" class="headerlink" title="关闭容器"></a>关闭容器</h3><h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start 容器ID|容器名称</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="重启容器"><a href="#重启容器" class="headerlink" title="重启容器"></a>重启容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker restart 容器ID|容器名称</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="容器删除"><a href="#容器删除" class="headerlink" title="容器删除"></a>容器删除</h3><p>使用命令:”docker rm {容器ID|容器名称}”来删除已经关闭的容器，如果容器在运行中想要强制删除可以加’-f’参数进行强制删除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">rm</span> 容器ID|容器名称</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="容器日志"><a href="#容器日志" class="headerlink" title="容器日志"></a>容器日志</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs 容器ID|容器名称</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="容器转镜像"><a href="#容器转镜像" class="headerlink" title="容器转镜像"></a>容器转镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果容器在运行中可以使用-p参数</span></span><br><span class="line">[root@docker ~]<span class="comment"># docker commit -p myweb myweb:v1.0</span></span><br><span class="line">sha256:05f5efa5b56fd3d9c6d17b74ee4a3e9866095ac8cc681879dda21b9b7a968859</span><br><span class="line">[root@docker ~]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY    TAG       IMAGE ID       CREATED         SIZE</span><br><span class="line">myweb         v1.0      05f5efa5b56f   4 seconds ago   142MB</span><br><span class="line">nginx         latest    fa5269854a5e   11 days ago     142MB</span><br><span class="line">hello-world   latest    feb5d9fea6a5   7 months ago    13.3kB</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="容器信息"><a href="#容器信息" class="headerlink" title="容器信息"></a>容器信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect &#123;容器ID|容器名称&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">FROM 指定基础镜像</span><br><span class="line"></span><br><span class="line">MAINTAINER 指定维护者</span><br><span class="line"></span><br><span class="line">RUN 在命令前面加上RUN即可</span><br><span class="line"></span><br><span class="line">ADD 添加宿主机的文件到容器内，多了个自动解压的功能</span><br><span class="line"></span><br><span class="line">COPY 也是添加宿主机的文件到容器内，仅仅拷贝</span><br><span class="line"></span><br><span class="line">WORKDIR 设置当前工作目录</span><br><span class="line"></span><br><span class="line">VOLUME 设置卷，挂载主机目录</span><br><span class="line"></span><br><span class="line">EXPOSE 指定对外的端口</span><br><span class="line"></span><br><span class="line">CMD 指定容器启动后要干的事情</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Docker网络"><a href="#Docker网络" class="headerlink" title="Docker网络"></a>Docker网络</h1><p>Docker网络是宿主机虚拟出来的，并不是真实存在的网络设备，外部网络无法直接访问到容器，从而实现网络的隔离。</p>
+<h2 id="网络模式"><a href="#网络模式" class="headerlink" title="网络模式"></a>网络模式</h2><h3 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h3><p><img src="/upload/2022/07/Docker_network_host.png" alt="Docker_network_host"><br>启动容器时使用host模式，那这个容器将不会获得一个独立的ip，而是和宿主机共用一个ip，容器将不会虚拟出自己的网卡，而是使用宿主机的ip和端口，但是容器其他方面，比如文件系统，进程系统都是独立。</p>
+<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p><img src="/upload/2022/07/Docker_network_container.png" alt="Docker_network_container"><br>启动容器时使用Container使用的时候需要指定一个容器id或者容器名称，这个模式会和指定的容器共享同一个ip，和host一样除了ip是共享对应容器的ip之外，容器的其他方面，比如文件系统，进程系统都是独立的。</p>
+<h3 id="None"><a href="#None" class="headerlink" title="None"></a>None</h3><p><img src="/upload/2022/07/Docker_network_none.png" alt="Docker_network_none"><br>启动容器时使用None，Docker容器将不会生成网卡，也就是说容器会没有网卡，ip，路由等信息。需要我们自己来添加。这种网络情况只会又一个lo回环网卡。</p>
+<h3 id="bridge"><a href="#bridge" class="headerlink" title="bridge"></a>bridge</h3><p><img src="/upload/2022/07/Docker_network_bridge.png" alt="Docker_network_bridge"><br>当docker服务启动的时候，会在主机上创建一个docker0的虚拟网卡，此主机默认启动的容器都会链接到这个虚拟网卡上。类似与vmwar 的一个虚拟网络。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/Tools">Tools</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">Docker安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F"><span class="toc-number">2.</span> <span class="toc-text">Docker镜像加速</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">3.</span> <span class="toc-text">Docker生命周期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E5%91%BD%E4%BB%A4"><span class="toc-number">4.</span> <span class="toc-text">Docker命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E7%9B%B8%E5%85%B3"><span class="toc-number">4.1.</span> <span class="toc-text">镜像相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2"><span class="toc-number">4.1.1.</span> <span class="toc-text">搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD-x2F-%E6%8B%89%E5%8F%96"><span class="toc-number">4.1.2.</span> <span class="toc-text">下载&#x2F;拉取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%88%97%E8%A1%A8"><span class="toc-number">4.1.3.</span> <span class="toc-text">镜像列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E6%A0%87%E7%AD%BE"><span class="toc-number">4.1.4.</span> <span class="toc-text">镜像标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%88%A0%E9%99%A4"><span class="toc-number">4.1.5.</span> <span class="toc-text">镜像删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%AF%BC%E5%87%BA"><span class="toc-number">4.1.6.</span> <span class="toc-text">镜像导出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%AF%BC%E5%85%A5"><span class="toc-number">4.1.7.</span> <span class="toc-text">镜像导入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E7%9B%B8%E5%85%B3"><span class="toc-number">4.2.</span> <span class="toc-text">容器相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%B9%E5%99%A8"><span class="toc-number">4.2.1.</span> <span class="toc-text">创建容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E5%88%97%E8%A1%A8"><span class="toc-number">4.2.2.</span> <span class="toc-text">容器列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E5%AE%B9%E5%99%A8"><span class="toc-number">4.2.3.</span> <span class="toc-text">关闭容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">4.2.4.</span> <span class="toc-text">启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">4.2.5.</span> <span class="toc-text">重启容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E5%88%A0%E9%99%A4"><span class="toc-number">4.2.6.</span> <span class="toc-text">容器删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97"><span class="toc-number">4.2.7.</span> <span class="toc-text">容器日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E8%BD%AC%E9%95%9C%E5%83%8F"><span class="toc-number">4.2.8.</span> <span class="toc-text">容器转镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%BF%A1%E6%81%AF"><span class="toc-number">4.2.9.</span> <span class="toc-text">容器信息</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DockerFile"><span class="toc-number">5.</span> <span class="toc-text">DockerFile</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E7%BD%91%E7%BB%9C"><span class="toc-number">6.</span> <span class="toc-text">Docker网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F"><span class="toc-number">6.1.</span> <span class="toc-text">网络模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Host"><span class="toc-number">6.1.1.</span> <span class="toc-text">Host</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Container"><span class="toc-number">6.1.2.</span> <span class="toc-text">Container</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#None"><span class="toc-number">6.1.3.</span> <span class="toc-text">None</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bridge"><span class="toc-number">6.1.4.</span> <span class="toc-text">bridge</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&text=Docker学习笔记"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Docker学习笔记"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&is_video=false&description=Docker学习笔记"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Docker学习笔记&body=Check out this article: http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Docker学习笔记"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Docker学习笔记"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Docker学习笔记"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Docker学习笔记"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&name=Docker学习笔记&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&t=Docker学习笔记"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Tom
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
