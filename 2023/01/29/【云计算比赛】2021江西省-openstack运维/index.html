@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="【任务 3】OpenStack 运维任务[15 分]【题目 1】镜像管理在 openstack 私有云平台上，基于 cirros-0.3.4-x86_64-disk.img 镜 像，使用命令创建一个名为 cirros 的镜像。完成后提交控制节点的用户名、密码和 IP 地址到答题框。  基于openstack命令创建  1[root@controller ~]# openstack image cr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【云计算比赛】2021江西省-openstack运维">
+<meta property="og:url" content="http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/index.html">
+<meta property="og:site_name" content="Tom">
+<meta property="og:description" content="【任务 3】OpenStack 运维任务[15 分]【题目 1】镜像管理在 openstack 私有云平台上，基于 cirros-0.3.4-x86_64-disk.img 镜 像，使用命令创建一个名为 cirros 的镜像。完成后提交控制节点的用户名、密码和 IP 地址到答题框。  基于openstack命令创建  1[root@controller ~]# openstack image cr">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/upload/2022/05/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20220508203909.png">
+<meta property="article:published_time" content="2023-01-29T08:52:44.000Z">
+<meta property="article:modified_time" content="2023-01-29T08:52:51.630Z">
+<meta property="article:author" content="Tom">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/upload/2022/05/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20220508203909.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>【云计算比赛】2021江西省-openstack运维</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/01/29/%E9%92%89%E9%92%89%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&text=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&title=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&is_video=false&description=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【云计算比赛】2021江西省-openstack运维&body=Check out this article: http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&title=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&title=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&title=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&title=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&name=【云计算比赛】2021江西省-openstack运维&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&t=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E3%80%90%E4%BB%BB%E5%8A%A1-3%E3%80%91OpenStack-%E8%BF%90%E7%BB%B4%E4%BB%BB%E5%8A%A1-15-%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">【任务 3】OpenStack 运维任务[15 分]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-1%E3%80%91%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">【题目 1】镜像管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-2%E3%80%91%E5%AE%9E%E4%BE%8B%E7%B1%BB%E5%9E%8B%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">【题目 2】实例类型管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-3%E3%80%91%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">【题目 3】网络管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-4%E3%80%91%E4%BA%91%E4%B8%BB%E6%9C%BA%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">【题目 4】云主机管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-5%E3%80%91Cinder-%E7%AE%A1%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">【题目 5】Cinder 管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-6%E3%80%91Raid-%E7%AE%A1%E7%90%86"><span class="toc-number">1.6.</span> <span class="toc-text">【题目 6】Raid 管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-7%E3%80%91%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%BB%E4%BB%8E%E7%AE%A1%E7%90%86"><span class="toc-number">1.7.</span> <span class="toc-text">【题目 7】数据库主从管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-8%E3%80%91%E4%BA%91%E5%B9%B3%E5%8F%B0%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E6%8F%90%E5%8D%87"><span class="toc-number">1.8.</span> <span class="toc-text">【题目 8】云平台安全策略提升</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        【云计算比赛】2021江西省-openstack运维
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Tom</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-29T08:52:44.000Z" itemprop="datePublished">2023-01-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="【任务-3】OpenStack-运维任务-15-分"><a href="#【任务-3】OpenStack-运维任务-15-分" class="headerlink" title="【任务 3】OpenStack 运维任务[15 分]"></a>【任务 3】OpenStack 运维任务[15 分]</h1><h2 id="【题目-1】镜像管理"><a href="#【题目-1】镜像管理" class="headerlink" title="【题目 1】镜像管理"></a>【题目 1】镜像管理</h2><p>在 openstack 私有云平台上，基于 cirros-0.3.4-x86_64-disk.img 镜</p>
+<p>像，使用命令创建一个名为 cirros 的镜像。完成后提交控制节点的用<br>户名、密码和 IP 地址到答题框。</p>
+<ul>
+<li>基于openstack命令创建</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack image create --disk-format qcow2 --file cirros-0.3.0-x86_64-disk.img  cirros</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>glance组件创建</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># glance image-create --disk-format qcow2 --file cirros-0.3.0-x86_64-disk.img --container-format bare  --name cirros2</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="【题目-2】实例类型管理"><a href="#【题目-2】实例类型管理" class="headerlink" title="【题目 2】实例类型管理"></a>【题目 2】实例类型管理</h2><p>在 openstack 私有云平台上，使用命令创建一个名为 Fmin，ID 为 1，内存为 1024 MB，磁盘为 10 GB，vcpu 数量为 1 的云主机类型。<br>完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
+<ul>
+<li>基于openstack命令创建</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack flavor create  --id 1  --ram 1024 --disk 10 --vcpus 1  Fmin</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@controller ~]<span class="comment"># openstack flavor list</span></span><br><span class="line">+----+------+------+------+-----------+-------+-----------+</span><br><span class="line">| ID | Name |  RAM | Disk | Ephemeral | VCPUs | Is Public |</span><br><span class="line">+----+------+------+------+-----------+-------+-----------+</span><br><span class="line">| <span class="number">1</span>  | Fmin | <span class="number">1024</span> |   <span class="number">10</span> |         <span class="number">0</span> |     <span class="number">1</span> | True      |</span><br><span class="line">+----+------+------+------+-----------+-------+-----------+</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="【题目-3】网络管理"><a href="#【题目-3】网络管理" class="headerlink" title="【题目 3】网络管理"></a>【题目 3】网络管理</h2><p>在 openstack 私有云平台上，创建云主机网络 extnet，子网 extsubnet，虚拟机网段为 192.168.y.0&#x2F;24(其中 y 是 vlan 号)，网关为 192.168.y.1。完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
+<ul>
+<li>只演示命令行</li>
+</ul>
+<p>创建网络extnet</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack network create --provider-physical-network provider --provider-network-type vlan --external extnet</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#openstack network 参数</span></span><br><span class="line"><span class="comment"># --external 设置为外部网络</span></span><br><span class="line"><span class="comment"># --internal 设置为内部网络 </span></span><br></pre></td></tr></table></figure>
+
+<p>创建子网</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack subnet create extsubnet --gateway 192.168.200.2 --subnet-range 192.168.200.0/24 --network extnet</span></span><br><span class="line"></span><br><span class="line">extsubnet <span class="comment">#子网名称</span></span><br><span class="line">--gateway <span class="comment">#网关</span></span><br><span class="line">--subnet-range <span class="comment">#网段</span></span><br><span class="line">--network <span class="comment">#指定在哪个网络创建子网</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="【题目-4】云主机管理"><a href="#【题目-4】云主机管理" class="headerlink" title="【题目 4】云主机管理"></a>【题目 4】云主机管理</h2><p>在 openstack 私有云平台上，基于“cirros”镜像、flavor 使用“Fmin”、 extnet 的网络，创建一台虚拟机 VM1，启动 VM1，并使用 PC 机能远程登录到 VM1。提交控制节点的用户名、密码和 IP 地址到答题框。</p>
+<ul>
+<li><p>只演示命令行</p>
+</li>
+<li><p>上传的镜像</p>
+</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack image list</span></span><br><span class="line">+--------------------------------------+---------+--------+</span><br><span class="line">| ID                                   | Name    | Status |</span><br><span class="line">+--------------------------------------+---------+--------+</span><br><span class="line">| <span class="number">998692</span>de-c2b7-<span class="number">4</span>bef-a221-e420dbc8094f | cirros  | active |</span><br><span class="line">+--------------------------------------+---------+--------+</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建的实例类型</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack flavor list</span></span><br><span class="line">+----+------+------+------+-----------+-------+-----------+</span><br><span class="line">| ID | Name |  RAM | Disk | Ephemeral | VCPUs | Is Public |</span><br><span class="line">+----+------+------+------+-----------+-------+-----------+</span><br><span class="line">| <span class="number">1</span>  | Fmin | <span class="number">1024</span> |   <span class="number">10</span> |         <span class="number">0</span> |     <span class="number">1</span> | True      |</span><br><span class="line">+----+------+------+------+-----------+-------+-----------+</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建的网络</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack network list</span></span><br><span class="line">+--------------------------------------+--------+--------------------------------------+</span><br><span class="line">| ID                                   | Name   | Subnets                              |</span><br><span class="line">+--------------------------------------+--------+--------------------------------------+</span><br><span class="line">| <span class="number">6</span>d38009c-<span class="number">7893</span>-<span class="number">41</span>bf-acd9-<span class="number">7</span>f1c6dae2ba1 | extnet | <span class="number">798</span>c9069-dd33-<span class="number">417</span>e-<span class="number">94</span>dc-<span class="number">3</span>a9381562cf3 |</span><br><span class="line">+------------------------</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建虚拟机</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack server create --image cirros --flavor Fmin --network extnet VM1</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="【题目-5】Cinder-管理"><a href="#【题目-5】Cinder-管理" class="headerlink" title="【题目 5】Cinder 管理"></a>【题目 5】Cinder 管理</h2><p>在 openstack 私有云平台上，创建一个名为“lvm”的卷类型，创<br>建一块卷设备，名字为 block、类型为 lvm 的 40G 云硬盘，并附加到<br>虚拟机 VM1 上。完成后提交控制节点 IP 地址、用户名和密码到答题<br>框。</p>
+<ul>
+<li>只演示命令行</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ openstack volume type create lvm</span><br><span class="line">$ openstack volume create --type lvm --size <span class="number">40</span> block</span><br><span class="line">$ openstack volume list</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绑定硬盘</span></span><br><span class="line">$ openstack server add volume VM1 block</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="【题目-6】Raid-管理"><a href="#【题目-6】Raid-管理" class="headerlink" title="【题目 6】Raid 管理"></a>【题目 6】Raid 管理</h2><p>在 OpenStack 私有云平台，创建一台云主机，并创建一个 40G 大<br>小的 cinder 块存储，将块存储连接到云主机，然后在云主机上对云硬<br>盘进行操作。要求分出 4 个大小为 5G 的分区，使用这 4 个分区，创<br>建名为&#x2F;dev&#x2F;md5、raid 级别为 5 的磁盘阵列加一个热备盘(使用最后<br>一个分区作为热备盘)。完成后提交云主机的用户名、密码和 IP 地址<br>到答题框。</p>
+<ul>
+<li>只演示命令行</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack server create --image centos7_x --flavor Fmin --network extnet VM2</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack volume type create lvm</span></span><br><span class="line">[root@controller ~]<span class="comment"># openstack volume create --type lvm --size 40 v2</span></span><br><span class="line">[root@controller ~]<span class="comment"># openstack volume list</span></span><br><span class="line"><span class="comment"># 绑定硬盘</span></span><br><span class="line">[root@controller ~]<span class="comment"># openstack server add volume VM2 v2</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ul>
+<li>配置yum源</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 yum.repos.d]# cd /etc/yum.repos.d/</span><br><span class="line">[root@vm1 yum.repos.d]# rm -rf *</span><br><span class="line">[root@vm1 yum.repos.d]# vim local.repo</span><br><span class="line"></span><br><span class="line">[centos]</span><br><span class="line">name=centos</span><br><span class="line">baseurl=ftp://192.168.100.10/centos</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line"></span><br><span class="line">[root@vm1 yum.repos.d]# yum repolist</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">repo id                                    repo name                                 status</span><br><span class="line">centos                                     centos                                    4,071</span><br><span class="line">repolist: 4,071</span><br><span class="line">[root@vm1 yum.repos.d]#</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>分区</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># fdisk /dev/vdb</span></span><br><span class="line"></span><br><span class="line">Command (m <span class="keyword">for</span> help): p</span><br><span class="line"></span><br><span class="line">Disk /dev/vdb: <span class="number">42.9</span> GB, <span class="number">42949672960</span> bytes, <span class="number">83886080</span> sectors</span><br><span class="line">Units = sectors of <span class="number">1</span> * <span class="number">512</span> = <span class="number">512</span> bytes</span><br><span class="line">Sector size (logical/physical): <span class="number">512</span> bytes / <span class="number">512</span> bytes</span><br><span class="line">I/O size (minimum/optimal): <span class="number">512</span> bytes / <span class="number">512</span> bytes</span><br><span class="line">Disk label type: dos</span><br><span class="line">Disk identifier: <span class="number">0x5fa0c5d7</span></span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line"></span><br><span class="line">Command (m <span class="keyword">for</span> help): n</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (<span class="number">0</span> primary, <span class="number">0</span> extended, <span class="number">4</span> free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): p</span><br><span class="line">Partition number (<span class="number">1</span>-<span class="number">4</span>, default <span class="number">1</span>):</span><br><span class="line">First sector (<span class="number">2048</span>-<span class="number">83886079</span>, default <span class="number">2048</span>):</span><br><span class="line">Using default value <span class="number">2048</span></span><br><span class="line">Last sector, +sectors <span class="keyword">or</span> +size&#123;K,M,G&#125; (<span class="number">2048</span>-<span class="number">83886079</span>, default <span class="number">83886079</span>): +<span class="number">5</span>G</span><br><span class="line">Partition <span class="number">1</span> of type Linux <span class="keyword">and</span> of size <span class="number">5</span> GiB is set</span><br><span class="line"></span><br><span class="line"><span class="comment">#分4个区 步骤重复即可</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m <span class="keyword">for</span> help): p</span><br><span class="line"></span><br><span class="line">Disk /dev/vdb: <span class="number">42.9</span> GB, <span class="number">42949672960</span> bytes, <span class="number">83886080</span> sectors</span><br><span class="line">Units = sectors of <span class="number">1</span> * <span class="number">512</span> = <span class="number">512</span> bytes</span><br><span class="line">Sector size (logical/physical): <span class="number">512</span> bytes / <span class="number">512</span> bytes</span><br><span class="line">I/O size (minimum/optimal): <span class="number">512</span> bytes / <span class="number">512</span> bytes</span><br><span class="line">Disk label type: dos</span><br><span class="line">Disk identifier: <span class="number">0x5fa0c5d7</span></span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/vdb1            <span class="number">2048</span>    <span class="number">10487807</span>     <span class="number">5242880</span>   <span class="number">83</span>  Linux</span><br><span class="line">/dev/vdb2        <span class="number">10487808</span>    <span class="number">20973567</span>     <span class="number">5242880</span>   <span class="number">83</span>  Linux</span><br><span class="line">/dev/vdb3        <span class="number">20973568</span>    <span class="number">31459327</span>     <span class="number">5242880</span>   <span class="number">83</span>  Linux</span><br><span class="line">/dev/vdb4        <span class="number">31459328</span>    <span class="number">41945087</span>     <span class="number">5242880</span>   <span class="number">83</span>  Linux</span><br><span class="line"></span><br><span class="line">Command (m <span class="keyword">for</span> help): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling <span class="keyword">ioctl</span>() to re-<span class="keyword">read</span> partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ul>
+<li>创建raid5</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 yum.repos.d]<span class="comment"># mdadm -C -v /dev/md5 -l 5 -n 3 /dev/vdb[1-3] -x1 /dev/vdb4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查看状态</span></span><br><span class="line">[root@vm1 yum.repos.d]<span class="comment"># cat /proc/mdstat</span></span><br><span class="line">[root@vm1 yum.repos.d]<span class="comment"># mdadm -D /dev/md5</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="【题目-7】数据库主从管理"><a href="#【题目-7】数据库主从管理" class="headerlink" title="【题目 7】数据库主从管理"></a>【题目 7】数据库主从管理</h2><p>使用 OpenStack 私有云平台，创建两台云主机 vm1 和 vm2，在<br>这两台云主机上分别安装数据库服务，并配置成主从数据库，vm1 节</p>
+<p>点为主库，vm2 节点为从库(数据库密码设置为 000000)。完成后提<br>交数据库从节点 vm2 节点的用户名、密码和 IP 地址到答题框。</p>
+<ul>
+<li><p>只演示命令行</p>
+</li>
+<li><p>创建云主机</p>
+</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment">#  openstack server create --image centos7_x --flavor Fmin --network extnet vm1</span></span><br><span class="line">[root@controller ~]<span class="comment">#  openstack server create --image centos7_x --flavor Fmin --network extnet vm2</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>主机名，yum配置、数据库安装</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#vm1</span></span><br><span class="line">[root@vm1 ~]<span class="comment"># hostnamectl  set-hostname master</span></span><br><span class="line">[root@vm1 ~]<span class="comment"># bash</span></span><br><span class="line">[root@master ~]<span class="comment"># cd /etc/yum.repos.d/</span></span><br><span class="line">[root@master ~]<span class="comment"># rm -rf *</span></span><br><span class="line">[root@master ~]<span class="comment"># vim ftp.repo</span></span><br><span class="line">[centos]</span><br><span class="line">name=centos</span><br><span class="line">baseurl=ftp:<span class="regexp">//</span><span class="number">192.168</span>.<span class="number">100.10</span>/centos</span><br><span class="line">gpgcheck=<span class="number">0</span></span><br><span class="line">enabled=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">[root@master ~]<span class="comment"># yum -y install mariadb-server mariadb</span></span><br><span class="line">[root@master ~]<span class="comment"># systemctl start mariadb</span></span><br><span class="line">[root@master ~]<span class="comment"># mysql_secure_installation</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#vm2</span></span><br><span class="line">[root@vm2 ~]<span class="comment"># hostnamectl  set-hostname slave</span></span><br><span class="line">[root@vm2 ~]<span class="comment"># bash</span></span><br><span class="line">[root@slave ~]<span class="comment"># cd /etc/yum.repos.d/</span></span><br><span class="line">[root@slave ~]<span class="comment"># rm -rf *</span></span><br><span class="line">[root@slave ~]<span class="comment"># vim ftp.repo</span></span><br><span class="line">[centos]</span><br><span class="line">name=centos</span><br><span class="line">baseurl=ftp:<span class="regexp">//</span><span class="number">192.168</span>.<span class="number">100.10</span>/centos</span><br><span class="line">gpgcheck=<span class="number">0</span></span><br><span class="line">enabled=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">[root@slave ~]<span class="comment"># yum -y install mariadb-server mariadb</span></span><br><span class="line">[root@master ~]<span class="comment"># systemctl start mariadb</span></span><br><span class="line">[root@master ~]<span class="comment"># mysql_secure_installation</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>master配置</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#修改主服务器mariadb配置文件</span></span><br><span class="line">[root@master ~]<span class="comment"># vim /etc/my.cnf</span></span><br><span class="line"></span><br><span class="line">在[mysqld]配置段添加如下内容，开启二制文件功能</span><br><span class="line">server-id=<span class="number">1</span> <span class="comment">#定义主服务ID，要求唯一性</span></span><br><span class="line"><span class="keyword">log</span>-bin=master-bin <span class="comment">#开启二进制文件功能，可以自定义文件名称</span></span><br><span class="line"></span><br><span class="line">[root@master ~]<span class="comment">#systemctl restart mariadb</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 授权备用服务器账号与密码</span></span><br><span class="line">MariaDB [(none)]&gt;  grant replication slave on *.* to <span class="string">&quot;slave&quot;</span>@&quot;%&quot; identified by <span class="string">&quot;123456&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; show master status;</span><br><span class="line">+-------------------+----------+--------------+------------------+</span><br><span class="line">| File              | Position | Binlog_Do_DB | Binlog_Ignore_DB |</span><br><span class="line">+-------------------+----------+--------------+------------------+</span><br><span class="line">| master-bin.<span class="number">000003</span> |      <span class="number">388</span> |              |                  |</span><br><span class="line">+-------------------+----------+--------------+------------------+</span><br><span class="line"><span class="number">1</span> row in set (<span class="number">0</span>.<span class="number">00</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>slave配置</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@slave ~]<span class="comment"># vim /etc/my.cnf</span></span><br><span class="line">在[mysqld]配置段添加如下内容</span><br><span class="line">server-id=<span class="number">2</span></span><br><span class="line"></span><br><span class="line">[root@slave ~]<span class="comment">#systemctl restart mariadb</span></span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; change master to master_host=<span class="string">&quot;master&quot;</span>,master_user=<span class="string">&quot;slave&quot;</span>,master_password=<span class="string">&quot;000000&quot;</span>,master_log_file=<span class="string">&quot;master-bin.000003&quot;</span>,master_log_pos=<span class="number">388</span>;</span><br><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0</span>.<span class="number">05</span> sec)</span><br><span class="line"></span><br><span class="line"><span class="comment"># master_log_file,master_log_pos的值为上面master查看master状态得到了</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; slave start;</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看从服务器状态Slave_IO_Running和Slave_SQL_Running都为Yes即可</span></span><br><span class="line">MariaDB [(none)]&gt; show slave status\G</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>验证</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#master创建数据库</span></span><br><span class="line">MariaDB [(none)]&gt; create database demo charset utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">#slave查看数据库</span></span><br><span class="line">MariaDB [(none)]&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| demo               |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| test               |</span><br><span class="line">+--------------------+</span><br><span class="line"><span class="number">7</span> rows in set (<span class="number">0</span>.<span class="number">00</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="【题目-8】云平台安全策略提升"><a href="#【题目-8】云平台安全策略提升" class="headerlink" title="【题目 8】云平台安全策略提升"></a>【题目 8】云平台安全策略提升</h2><p>使用 OpenStack 私有云平台，通过提供的相关软件包，安装必要<br>组件，将私有云平台的访问策略从 http 提升至 https。完成后提交控<br>制节点的用户名、密码和 IP 地址到答题框。</p>
+<ul>
+<li>controller</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># yum -y install mod_ssl</span></span><br><span class="line">[root@controller ~]<span class="comment"># vim /etc/openstack-dashboard/local_settings </span></span><br><span class="line"> <span class="number">49</span> CSRF_COOKIE_SECURE = True</span><br><span class="line"> <span class="number">50</span> SESSION_COOKIE_SECURE = True</span><br><span class="line"> 找到上面行 取消注释</span><br><span class="line"> </span><br><span class="line"> 添加</span><br><span class="line"> USE_SSL = True</span><br><span class="line"> </span><br><span class="line"> [root@controller ~]<span class="comment"># systemctl restart httpd</span></span><br></pre></td></tr></table></figure>
+<p><img src="/upload/2022/05/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20220508203909.png" alt="微信截图_20220508203909"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/Tools">Tools</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E3%80%90%E4%BB%BB%E5%8A%A1-3%E3%80%91OpenStack-%E8%BF%90%E7%BB%B4%E4%BB%BB%E5%8A%A1-15-%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">【任务 3】OpenStack 运维任务[15 分]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-1%E3%80%91%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">【题目 1】镜像管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-2%E3%80%91%E5%AE%9E%E4%BE%8B%E7%B1%BB%E5%9E%8B%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">【题目 2】实例类型管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-3%E3%80%91%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">【题目 3】网络管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-4%E3%80%91%E4%BA%91%E4%B8%BB%E6%9C%BA%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">【题目 4】云主机管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-5%E3%80%91Cinder-%E7%AE%A1%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">【题目 5】Cinder 管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-6%E3%80%91Raid-%E7%AE%A1%E7%90%86"><span class="toc-number">1.6.</span> <span class="toc-text">【题目 6】Raid 管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-7%E3%80%91%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%BB%E4%BB%8E%E7%AE%A1%E7%90%86"><span class="toc-number">1.7.</span> <span class="toc-text">【题目 7】数据库主从管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90%E9%A2%98%E7%9B%AE-8%E3%80%91%E4%BA%91%E5%B9%B3%E5%8F%B0%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E6%8F%90%E5%8D%87"><span class="toc-number">1.8.</span> <span class="toc-text">【题目 8】云平台安全策略提升</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&text=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&title=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&is_video=false&description=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【云计算比赛】2021江西省-openstack运维&body=Check out this article: http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&title=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&title=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&title=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&title=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&name=【云计算比赛】2021江西省-openstack运维&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/&t=【云计算比赛】2021江西省-openstack运维"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Tom
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

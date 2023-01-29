@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="视频地址：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1hY4y1i75D&#x2F; Postfix sdskills.net 的邮件发送服务器 支持smtps(465)协议连接，使用Rserver颁发的证书,证书路径&#x2F;CA&#x2F;cacert.pem 创建邮箱账户“user1~user99”（共99个用户），密码为Chinaskill20!。 Dovecot sdsk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络系统管理技能大赛|debian配置mail">
+<meta property="og:url" content="http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/index.html">
+<meta property="og:site_name" content="Tom">
+<meta property="og:description" content="视频地址：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1hY4y1i75D&#x2F; Postfix sdskills.net 的邮件发送服务器 支持smtps(465)协议连接，使用Rserver颁发的证书,证书路径&#x2F;CA&#x2F;cacert.pem 创建邮箱账户“user1~user99”（共99个用户），密码为Chinaskill20!。 Dovecot sdsk">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-29T08:51:19.000Z">
+<meta property="article:modified_time" content="2023-01-29T08:51:24.896Z">
+<meta property="article:author" content="Tom">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>网络系统管理技能大赛|debian配置mail</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/01/29/%E9%92%89%E9%92%89%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E5%AE%89%E8%A3%85mariadb%E9%85%8D%E7%BD%AEphpmyadmin/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&text=网络系统管理技能大赛|debian配置mail"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&title=网络系统管理技能大赛|debian配置mail"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&is_video=false&description=网络系统管理技能大赛|debian配置mail"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=网络系统管理技能大赛|debian配置mail&body=Check out this article: http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&title=网络系统管理技能大赛|debian配置mail"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&title=网络系统管理技能大赛|debian配置mail"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&title=网络系统管理技能大赛|debian配置mail"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&title=网络系统管理技能大赛|debian配置mail"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&name=网络系统管理技能大赛|debian配置mail&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&t=网络系统管理技能大赛|debian配置mail"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS"><span class="toc-number">1.</span> <span class="toc-text">DNS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#server01"><span class="toc-number">1.1.</span> <span class="toc-text">server01</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%81%E4%B9%A6%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">证书配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#server02"><span class="toc-number">2.1.</span> <span class="toc-text">server02</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rserver"><span class="toc-number">2.2.</span> <span class="toc-text">Rserver</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#postfix"><span class="toc-number">3.</span> <span class="toc-text">postfix</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91postfix%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">编辑postfix配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91master"><span class="toc-number">3.2.</span> <span class="toc-text">编辑master</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%90%AF"><span class="toc-number">3.3.</span> <span class="toc-text">重启</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B"><span class="toc-number">3.4.</span> <span class="toc-text">查看</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#dovecot"><span class="toc-number">4.</span> <span class="toc-text">dovecot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">4.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEdovecot-conf"><span class="toc-number">4.2.</span> <span class="toc-text">配置dovecot.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE10-mail-conf"><span class="toc-number">4.3.</span> <span class="toc-text">配置10-mail.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE10-ssl-conf"><span class="toc-number">4.4.</span> <span class="toc-text">配置10-ssl.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%90%AF-1"><span class="toc-number">4.5.</span> <span class="toc-text">重启</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="toc-number">5.</span> <span class="toc-text">批量创建用户</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE"><span class="toc-number">6.</span> <span class="toc-text">邮箱设置</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        网络系统管理技能大赛|debian配置mail
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Tom</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-29T08:51:19.000Z" itemprop="datePublished">2023-01-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>视频地址：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hY4y1i75D/">https://www.bilibili.com/video/BV1hY4y1i75D/</a></p>
+<p><strong>Postfix</strong></p>
+<p>sdskills.net 的邮件发送服务器</p>
+<p>支持smtps(465)协议连接，使用Rserver颁发的证书,证书路径&#x2F;CA&#x2F;cacert.pem</p>
+<p>创建邮箱账户“user1~user99”（共99个用户），密码为Chinaskill20!。</p>
+<p><strong>Dovecot</strong></p>
+<p>sdskill.net 的邮件接收服务器；</p>
+<p>支持imaps（993）协议连接，使用Rserver颁发的证书，证书路径&#x2F;CA&#x2F;cacert.pem；</p>
+<p>请保留至少两个用户已成功登录并能正常收发邮件，以方便测试。</p>
+<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><h2 id="server01"><a href="#server01" class="headerlink" title="server01"></a>server01</h2><h1 id="证书配置"><a href="#证书配置" class="headerlink" title="证书配置"></a>证书配置</h1><h2 id="server02"><a href="#server02" class="headerlink" title="server02"></a>server02</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt -y install openssl</span><br></pre></td></tr></table></figure>
+<p>- </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssl/openssl.cnf</span><br><span class="line"></span><br><span class="line">48行 dir = ./demoCA</span><br><span class="line">改为</span><br><span class="line">48行 dir = /CA</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">91行 state0rProvinceName = match</span><br><span class="line">改为</span><br><span class="line">91行 state0rProvinceName = optional</span><br><span class="line"></span><br><span class="line">92行 organizationName    = match</span><br><span class="line">改为</span><br><span class="line">92行 organizationName    = optional</span><br></pre></td></tr></table></figure>
+<p>- </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mkdir /CA</span><br><span class="line"></span><br><span class="line">cd /CA</span><br><span class="line"></span><br><span class="line">openssl genrsa -out mail.key 2048</span><br><span class="line"></span><br><span class="line">openssl req -new -key mail.key -out mail.csr</span><br><span class="line"></span><br><span class="line">然后在server02上将证书请求文件发送到ca端</span><br><span class="line">scp /CA/mail.csr 172.16.100.254:/CA</span><br></pre></td></tr></table></figure>
+
+<h2 id="Rserver"><a href="#Rserver" class="headerlink" title="Rserver"></a>Rserver</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /CA</span><br><span class="line"></span><br><span class="line">openssl x509 -req -in mail.csr -CA /CA/cacert.pem -CAkey /CA/private/cakey.pem  -CAcreateserial -out mail.crt</span><br></pre></td></tr></table></figure>
+
+<p>将证书发给server01</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp mail.crt 172.16.100.202:/CA</span><br><span class="line">scp cacert.pem 172.16.100.202:/CA</span><br></pre></td></tr></table></figure>
+
+<h1 id="postfix"><a href="#postfix" class="headerlink" title="postfix"></a>postfix</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt install -y postfix</span><br><span class="line"></span><br><span class="line">选择Internet Site</span><br><span class="line">输入sdskills.net 确定</span><br></pre></td></tr></table></figure>
+
+<h2 id="编辑postfix配置文件"><a href="#编辑postfix配置文件" class="headerlink" title="编辑postfix配置文件"></a>编辑postfix配置文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/postfix/main.cf</span><br><span class="line"></span><br><span class="line">找到</span><br><span class="line">smtpd_tls_cert_file</span><br><span class="line">smtpd_tls_key_file</span><br><span class="line">修改为</span><br><span class="line">smtpd_tls_cert_file=/CA/mail.crt</span><br><span class="line">smtpd_tls_key_file=/CA/mail.key</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">最下面添加</span><br><span class="line">home_mailbox = Maildir/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">找到mydestination行</span><br><span class="line"></span><br><span class="line">在已有的数据添加mail.sdskills.net</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">修改mynetworks整行</span><br><span class="line">mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128</span><br><span class="line"></span><br><span class="line">修改为：</span><br><span class="line">mynetworks = 0.0.0.0/0</span><br><span class="line"></span><br><span class="line">修改myorigin = /etc/mailname</span><br><span class="line">为：</span><br><span class="line">myorigin = sdskills.net</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">修改myhostname = debian</span><br><span class="line">为：</span><br><span class="line">myhostname = mail.sdskills.net</span><br></pre></td></tr></table></figure>
+
+<h2 id="编辑master"><a href="#编辑master" class="headerlink" title="编辑master"></a>编辑master</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/postfix/master.cf</span><br><span class="line"></span><br><span class="line">找到这行在前面加#注释</span><br><span class="line">smtp      inet  n       -       y       -       -       smtpd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">找到这行删掉#</span><br><span class="line">#smtp      inet  n       -       y       -       -       smtpd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">找到这行删掉#</span><br><span class="line"># -o smtpd_tls_wrappermode=yes</span><br></pre></td></tr></table></figure>
+
+<h2 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart postfix</span><br><span class="line">systemctl status postfix</span><br><span class="line"></span><br><span class="line">netstat -tlnp |grep &#x27;master&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl s_client -connect mail.sdskills.net:465</span><br></pre></td></tr></table></figure>
+
+<h1 id="dovecot"><a href="#dovecot" class="headerlink" title="dovecot"></a>dovecot</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@server02:/CA# apt -y install dovecot-imapd</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置dovecot-conf"><a href="#配置dovecot-conf" class="headerlink" title="配置dovecot.conf"></a>配置dovecot.conf</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/dovecot/dovecot.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">找到</span><br><span class="line">#listen = *, ::</span><br><span class="line">改为</span><br><span class="line">listen = *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">找到</span><br><span class="line">#login_trusted_networks = </span><br><span class="line">改为</span><br><span class="line">login_trusted_networks = 0.0.0.0/0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">添加</span><br><span class="line">protocols = imaps</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置10-mail-conf"><a href="#配置10-mail-conf" class="headerlink" title="配置10-mail.conf"></a>配置10-mail.conf</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/dovecot/conf.d/10-mail.conf</span><br><span class="line"></span><br><span class="line">找到</span><br><span class="line">mail_location = mbox:~/mail:INBOX=/var/mail/%u</span><br><span class="line">改为</span><br><span class="line">#mail_location = mbox:~/mail:INBOX=/var/mail/%u</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">找到</span><br><span class="line"># mail_location = maildir:~/Maildir</span><br><span class="line">改为</span><br><span class="line">mail_location = maildir:~/Maildir</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置10-ssl-conf"><a href="#配置10-ssl-conf" class="headerlink" title="配置10-ssl.conf"></a>配置10-ssl.conf</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/dovecot/conf.d/10-ssl.conf</span><br><span class="line"></span><br><span class="line">找到</span><br><span class="line">ssl_cert = &lt;/etc/dovecot/private/dovecot.pem</span><br><span class="line">改为</span><br><span class="line">ssl_cert = &lt;/CA/mail.crt</span><br><span class="line"></span><br><span class="line">找到</span><br><span class="line">ssl_key = &lt;/etc/dovecot/private/dovecot.key</span><br><span class="line">改为</span><br><span class="line">ssl_key = &lt;/CA/mail.key</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root@server02:~# cd /etc/dovecot/private</span><br><span class="line"></span><br><span class="line">root@server02:/etc/dovecot/private# ln -s /CA/mail.crt ./</span><br><span class="line">root@server02:/etc/dovecot/private# ln -s /CA/mail.key ./</span><br></pre></td></tr></table></figure>
+
+<h2 id="重启-1"><a href="#重启-1" class="headerlink" title="重启"></a>重启</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart dovecot</span><br><span class="line">systemctl status dovecot</span><br><span class="line"></span><br><span class="line">netstat -tlnp |grep &#x27;dovecot&#x27;</span><br><span class="line"></span><br><span class="line">openssl s_client -connect mail.sdskills.net:993</span><br></pre></td></tr></table></figure>
+
+<h1 id="批量创建用户"><a href="#批量创建用户" class="headerlink" title="批量创建用户"></a>批量创建用户</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vim test.sh</span><br><span class="line"></span><br><span class="line">#!/bin/bash</span><br><span class="line">for i in &#123;1..99&#125;</span><br><span class="line">do</span><br><span class="line">    useradd -m -s /bin/false &quot;user$i&quot;</span><br><span class="line">    echo &quot;user$i:Chinaskill20!&quot; |chpasswd</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bash test.sh #执行脚本</span><br></pre></td></tr></table></figure>
+
+<h1 id="邮箱设置"><a href="#邮箱设置" class="headerlink" title="邮箱设置"></a>邮箱设置</h1><p>到这里邮箱账户就添加好了</p>
+<p>我们在按照之前的步骤 在重新添加多一个账户 作为邮箱测试的</p>
+<p>我们点击新建按钮</p>
+<p>我们用user1发送邮件给user2</p>
+<p>我们来到user2的收件箱 可以看到收到了！</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/Tools">Tools</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS"><span class="toc-number">1.</span> <span class="toc-text">DNS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#server01"><span class="toc-number">1.1.</span> <span class="toc-text">server01</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%81%E4%B9%A6%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">证书配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#server02"><span class="toc-number">2.1.</span> <span class="toc-text">server02</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rserver"><span class="toc-number">2.2.</span> <span class="toc-text">Rserver</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#postfix"><span class="toc-number">3.</span> <span class="toc-text">postfix</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91postfix%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">编辑postfix配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91master"><span class="toc-number">3.2.</span> <span class="toc-text">编辑master</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%90%AF"><span class="toc-number">3.3.</span> <span class="toc-text">重启</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B"><span class="toc-number">3.4.</span> <span class="toc-text">查看</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#dovecot"><span class="toc-number">4.</span> <span class="toc-text">dovecot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">4.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEdovecot-conf"><span class="toc-number">4.2.</span> <span class="toc-text">配置dovecot.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE10-mail-conf"><span class="toc-number">4.3.</span> <span class="toc-text">配置10-mail.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE10-ssl-conf"><span class="toc-number">4.4.</span> <span class="toc-text">配置10-ssl.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%90%AF-1"><span class="toc-number">4.5.</span> <span class="toc-text">重启</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="toc-number">5.</span> <span class="toc-text">批量创建用户</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE"><span class="toc-number">6.</span> <span class="toc-text">邮箱设置</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&text=网络系统管理技能大赛|debian配置mail"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&title=网络系统管理技能大赛|debian配置mail"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&is_video=false&description=网络系统管理技能大赛|debian配置mail"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=网络系统管理技能大赛|debian配置mail&body=Check out this article: http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&title=网络系统管理技能大赛|debian配置mail"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&title=网络系统管理技能大赛|debian配置mail"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&title=网络系统管理技能大赛|debian配置mail"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&title=网络系统管理技能大赛|debian配置mail"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&name=网络系统管理技能大赛|debian配置mail&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian%E9%85%8D%E7%BD%AEmail/&t=网络系统管理技能大赛|debian配置mail"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Tom
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="主题123Material themeMonokai Theme  插件美化1Vibrancy &#x2F;&#x2F; 设置vscode为毛玻璃效果   快捷键工作区   MAC快捷键 Win快捷键 作用    command + Shift + P Ctrl + Shift + P，F1 显示命令面板   command+B Ctrl + B 显示&#x2F;隐藏侧边栏   command+ + command+">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vscode 个人配置">
+<meta property="og:url" content="http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Tom">
+<meta property="og:description" content="主题123Material themeMonokai Theme  插件美化1Vibrancy &#x2F;&#x2F; 设置vscode为毛玻璃效果   快捷键工作区   MAC快捷键 Win快捷键 作用    command + Shift + P Ctrl + Shift + P，F1 显示命令面板   command+B Ctrl + B 显示&#x2F;隐藏侧边栏   command+ + command+">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-29T08:50:00.000Z">
+<meta property="article:modified_time" content="2023-01-29T08:50:05.898Z">
+<meta property="article:author" content="Tom">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>vscode 个人配置</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E5%AE%89%E8%A3%85mariadb%E9%85%8D%E7%BD%AEphpmyadmin/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/01/29/vscode%E7%BD%91%E9%A1%B5%E7%AB%AF%E6%90%AD%E5%BB%BA/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&text=vscode 个人配置"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&title=vscode 个人配置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&is_video=false&description=vscode 个人配置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vscode 个人配置&body=Check out this article: http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&title=vscode 个人配置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&title=vscode 个人配置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&title=vscode 个人配置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&title=vscode 个人配置"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&name=vscode 个人配置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&t=vscode 个人配置"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">主题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%92%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">插件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%8E%E5%8C%96"><span class="toc-number">2.1.</span> <span class="toc-text">美化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">3.</span> <span class="toc-text">快捷键</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8C%BA"><span class="toc-number">3.1.</span> <span class="toc-text">工作区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC"><span class="toc-number">3.2.</span> <span class="toc-text">跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%89%E6%A0%87%E7%A7%BB%E5%8A%A8"><span class="toc-number">3.3.</span> <span class="toc-text">光标移动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91"><span class="toc-number">3.4.</span> <span class="toc-text">编辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4"><span class="toc-number">3.5.</span> <span class="toc-text">删除</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        vscode 个人配置
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Tom</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-29T08:50:00.000Z" itemprop="datePublished">2023-01-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Material theme</span><br><span class="line"></span><br><span class="line">Monokai Theme</span><br></pre></td></tr></table></figure>
+
+<h1 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h1><h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vibrancy // 设置vscode为毛玻璃效果</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h1><h2 id="工作区"><a href="#工作区" class="headerlink" title="工作区"></a>工作区</h2><table>
+<thead>
+<tr>
+<th>MAC快捷键</th>
+<th>Win快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>command + Shift + P</td>
+<td>Ctrl + Shift + P，F1</td>
+<td>显示命令面板</td>
+</tr>
+<tr>
+<td>command+B</td>
+<td>Ctrl + B</td>
+<td>显示&#x2F;隐藏侧边栏</td>
+</tr>
+<tr>
+<td>command+ + command+ -</td>
+<td>Ctrl+ +         Ctrl+ -</td>
+<td>将工作区放大&#x2F;缩小（包括代码字体、左侧导航栏）</td>
+</tr>
+<tr>
+<td>command+J</td>
+<td>Ctrl + J</td>
+<td>显示&#x2F;隐藏控制台</td>
+</tr>
+<tr>
+<td>command + N</td>
+<td>Ctrl + N</td>
+<td>新建文件</td>
+</tr>
+<tr>
+<td>Cmd + W</td>
+<td>Ctrl + W</td>
+<td>关闭当前文件</td>
+</tr>
+</tbody></table>
+<h2 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h2><table>
+<thead>
+<tr>
+<th>MAC快捷键</th>
+<th>Win快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cmd + Option + 左右方向键</td>
+<td>Ctrl + Pagedown&#x2F;Pageup</td>
+<td>在已经打开的多个文件之间进行切换</td>
+</tr>
+</tbody></table>
+<h2 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h2><table>
+<thead>
+<tr>
+<th>Mac 快捷键</th>
+<th>Win 快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>option + 左右方向键</strong></td>
+<td><strong>Ctrl + 左右方向键</strong></td>
+<td>在<strong>单词</strong> 之间移动光标</td>
+</tr>
+<tr>
+<td><strong>Cmd + 左右方向键</strong></td>
+<td><strong>Fn + 左右方向键</strong></td>
+<td>在<strong>整行</strong> 之间移动光标</td>
+</tr>
+<tr>
+<td>Cmd + ←</td>
+<td>Fn + ←（或 Win + ←）</td>
+<td>将光标定位到当前行的最左侧</td>
+</tr>
+<tr>
+<td>Cmd + →</td>
+<td>Fn + →（或 Win + →）</td>
+<td>将光标定位到当前行的最右侧</td>
+</tr>
+<tr>
+<td>Cmd + ↑</td>
+<td>Ctrl + Home</td>
+<td>将光标定位到文章的第一行</td>
+</tr>
+<tr>
+<td>Cmd + ↓</td>
+<td>Ctrl + End</td>
+<td>将光标定位到文章的最后一行</td>
+</tr>
+<tr>
+<td>Cmd + Shift +</td>
+<td></td>
+<td>在<strong>代码块</strong> 之间移动光标</td>
+</tr>
+</tbody></table>
+<h2 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h2><table>
+<thead>
+<tr>
+<th>Mac 快捷键</th>
+<th>Win 快捷键</th>
+<th>作用</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Cmd + Enter</strong></td>
+<td><strong>Ctrl + Enter</strong></td>
+<td>在当前行的下方新增一行，然后跳至该行</td>
+<td>即使光标不在行尾，也能快速向下插入一行</td>
+</tr>
+<tr>
+<td>Cmd+Shift+Enter</td>
+<td>Ctrl+Shift+Enter</td>
+<td>在当前行的上方新增一行，然后跳至该行</td>
+<td>即使光标不在行尾，也能快速向上插入一行</td>
+</tr>
+<tr>
+<td><strong>Option + ↑</strong></td>
+<td><strong>Alt + ↑</strong></td>
+<td>将代码向上移动</td>
+<td>很常用</td>
+</tr>
+<tr>
+<td><strong>Option + ↓</strong></td>
+<td><strong>Alt + ↓</strong></td>
+<td>将代码向下移动</td>
+<td>很常用</td>
+</tr>
+<tr>
+<td>Option + Shift + ↑</td>
+<td>Alt + Shift + ↑</td>
+<td>将代码向上复制</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Option + Shift + ↓</strong></td>
+<td><strong>Alt + Shift + ↓</strong></td>
+<td>将代码向下复制</td>
+<td>写重复代码的利器</td>
+</tr>
+</tbody></table>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><table>
+<thead>
+<tr>
+<th>Mac 快捷键</th>
+<th>Win 快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cmd + shift + K</td>
+<td>Ctrl + Shift + K</td>
+<td>删除整行</td>
+</tr>
+</tbody></table>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/Tools">Tools</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">主题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%92%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">插件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%8E%E5%8C%96"><span class="toc-number">2.1.</span> <span class="toc-text">美化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">3.</span> <span class="toc-text">快捷键</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8C%BA"><span class="toc-number">3.1.</span> <span class="toc-text">工作区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC"><span class="toc-number">3.2.</span> <span class="toc-text">跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%89%E6%A0%87%E7%A7%BB%E5%8A%A8"><span class="toc-number">3.3.</span> <span class="toc-text">光标移动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91"><span class="toc-number">3.4.</span> <span class="toc-text">编辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4"><span class="toc-number">3.5.</span> <span class="toc-text">删除</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&text=vscode 个人配置"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&title=vscode 个人配置"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&is_video=false&description=vscode 个人配置"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vscode 个人配置&body=Check out this article: http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&title=vscode 个人配置"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&title=vscode 个人配置"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&title=vscode 个人配置"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&title=vscode 个人配置"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&name=vscode 个人配置&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/vscode-%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE/&t=vscode 个人配置"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Tom
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

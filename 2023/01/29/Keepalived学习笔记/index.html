@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Keepalived简介概述Keepalived一个基于VRRP协议来实现的LVS服务高可用方案，可以利用其来避免单点故障。一个LVS服务会有2台服务器运行Keepalived，一台为主服务器（MASTER），一台为备份服务器（BACKUP），但是对外表现为一个虚拟IP，主服务器会发送特定的消息给备份服务器，当备份服务器收不到这个消息的时候，即主服务器宕机的时候， 备份服务器就会接管虚拟IP，继续">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Keepalived学习笔记">
+<meta property="og:url" content="http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Tom">
+<meta property="og:description" content="Keepalived简介概述Keepalived一个基于VRRP协议来实现的LVS服务高可用方案，可以利用其来避免单点故障。一个LVS服务会有2台服务器运行Keepalived，一台为主服务器（MASTER），一台为备份服务器（BACKUP），但是对外表现为一个虚拟IP，主服务器会发送特定的消息给备份服务器，当备份服务器收不到这个消息的时候，即主服务器宕机的时候， 备份服务器就会接管虚拟IP，继续">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.tom-blog.cn/usr/uploads/2022/01/849625382.png">
+<meta property="og:image" content="http://www.tom-blog.cn/usr/uploads/2022/01/3407411815.png">
+<meta property="article:published_time" content="2023-01-29T08:55:09.000Z">
+<meta property="article:modified_time" content="2023-01-29T08:55:19.717Z">
+<meta property="article:author" content="Tom">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.tom-blog.cn/usr/uploads/2022/01/849625382.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Keepalived学习笔记</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/01/29/nginx%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/01/29/%E3%80%90%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E3%80%912021%E6%B1%9F%E8%A5%BF%E7%9C%81-openstack%E8%BF%90%E7%BB%B4/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&text=Keepalived学习笔记"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Keepalived学习笔记"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&is_video=false&description=Keepalived学习笔记"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Keepalived学习笔记&body=Check out this article: http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Keepalived学习笔记"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Keepalived学习笔记"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Keepalived学习笔记"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Keepalived学习笔记"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&name=Keepalived学习笔记&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&t=Keepalived学习笔记"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Keepalived%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Keepalived简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#keepalived%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">keepalived的作用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">主配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8keepalived"><span class="toc-number">3.1.</span> <span class="toc-text">启动keepalived</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#keepalived%E6%B3%A8%E5%86%8C%E4%B8%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.</span> <span class="toc-text">keepalived注册为系统服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#keepalived%E5%AE%9E%E7%8E%B0%E5%8F%8C%E6%9C%BA%E4%B8%BB%E5%A4%87%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">keepalived实现双机主备高可用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E7%8E%AF%E5%A2%83"><span class="toc-number">5.1.</span> <span class="toc-text">实现环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#keepalived%E9%85%8D%E7%BD%AE"><span class="toc-number">5.2.</span> <span class="toc-text">keepalived配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">5.3.</span> <span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#keepalived%E9%85%8D%E7%BD%AEnginx%E8%87%AA%E5%8A%A8%E9%87%8D%E5%90%AF"><span class="toc-number">6.</span> <span class="toc-text">keepalived配置nginx自动重启</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%9C%BA%E6%99%AF"><span class="toc-number">6.1.</span> <span class="toc-text">实现场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">6.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95-1"><span class="toc-number">6.3.</span> <span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%80"><span class="toc-number">6.3.1.</span> <span class="toc-text">测试一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E4%BA%8C"><span class="toc-number">6.3.2.</span> <span class="toc-text">测试二</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Keepalived学习笔记
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Tom</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-29T08:55:09.000Z" itemprop="datePublished">2023-01-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Keepalived简介"><a href="#Keepalived简介" class="headerlink" title="Keepalived简介"></a>Keepalived简介</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Keepalived一个基于VRRP协议来实现的LVS服务高可用方案，可以利用其来避免单点故障。一个LVS服务会有2台服务器运行Keepalived，一台为主服务器（MASTER），一台为备份服务器（BACKUP），但是对外表现为一个虚拟IP，主服务器会发送特定的消息给备份服务器，当备份服务器收不到这个消息的时候，即主服务器宕机的时候， 备份服务器就会接管虚拟IP，继续提供服务，从而保证了高可用性。</p>
+<h2 id="keepalived的作用"><a href="#keepalived的作用" class="headerlink" title="keepalived的作用"></a>keepalived的作用</h2><p>Keepalived的作用是检测服务器的状态，如果有一台web服务器死机，或工作出现故障，Keepalived将检测到，并将有故障的服务器从系统中剔除，同时使用其他服务器代替该服务器的工作，当服务器工作正常后Keepalived自动将服务器加入到服务器群中。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ol>
+<li>下载软件包</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">keepalived官网下载地址:  https://www.keepalived.org/download.html</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# wget https://www.keepalived.org/software/keepalived-2.2.4.tar.gz --no-check-certificate</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>解压</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# tar -zxvf keepalived-2.2.4.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>编译安装</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd  keepalived-2.2.4</span><br><span class="line"></span><br><span class="line"> ./configure --prefix=/usr/local/keepalived --sysconf=/etc  #软件安装到/usr/local/keepalived  配置文件配置到/etc</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@localhost ~]# whereis keepalived</span><br><span class="line">keepalived: /etc/keepalived /usr/local/keepalived</span><br></pre></td></tr></table></figure>
+
+<h1 id="主配置文件"><a href="#主配置文件" class="headerlink" title="主配置文件"></a>主配置文件</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/keepalived/keepalived.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1 global_defs &#123;</span><br><span class="line">  2    #路由id:当前安装keepalived节点主机的标识符,全局唯一的</span><br><span class="line">  3    router_id keep_21</span><br><span class="line">  4 &#125;</span><br><span class="line">  5 </span><br><span class="line">  6 </span><br><span class="line">  7 #计算机节点</span><br><span class="line">  8 vrrp_instance VI_1 &#123;</span><br><span class="line">  9     # 表示的状态,当前的主节点 MASTER/BACKUP</span><br><span class="line"> 10     state MASTER</span><br><span class="line"> 11     # 当前实例绑定的网卡</span><br><span class="line"> 12     interface ens32</span><br><span class="line"> 13     # 保证主备节点一致</span><br><span class="line"> 14     virtual_router_id 51</span><br><span class="line"> 15     # 优先级/权重,谁的优先级高,在MASTER挂掉以后,谁就能成为MASTER</span><br><span class="line"> 16     priority 100</span><br><span class="line"> 17     # 主备之间同步检查的时间间隔,默认1s</span><br><span class="line"> 18     advert_int 1</span><br><span class="line"> 19     # 认证授权的密码,防止非法节点的进入</span><br><span class="line"> 20     authentication &#123;</span><br><span class="line"> 21         auth_type PASS</span><br><span class="line"> 22         auth_pass 1111</span><br><span class="line"> 23     &#125;</span><br><span class="line"> 24     # 虚拟的ip</span><br><span class="line"> 25     virtual_ipaddress &#123;</span><br><span class="line"> 26         192.168.10.21</span><br><span class="line"> 27     &#125;</span><br><span class="line"> 28 &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动keepalived"><a href="#启动keepalived" class="headerlink" title="启动keepalived"></a>启动keepalived</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /usr/local/keepalived/sbin</span><br><span class="line">[root@localhost sbin]# ./keepalived #启动keepalived</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@localhost ~]# ip addr #查看ip</span><br></pre></td></tr></table></figure>
+
+<p>我们这里会看到ens32网卡会多出一个ip,就是我们刚刚配置的keepalived配置文件里面设置的虚拟ip</p>
+<h1 id="keepalived注册为系统服务"><a href="#keepalived注册为系统服务" class="headerlink" title="keepalived注册为系统服务"></a>keepalived注册为系统服务</h1><ol>
+<li>首先进到keepalived软件包目录</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /root/keepalived-2.2.4/keepalived/etc</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>复制keepalived对应的文件到系统服务对于的目录</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp init.d/keepalived /etc/init.d/</span><br><span class="line">cp sysconfig/keepalived /etc/sysconfig/</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重新加载系统服务并启动keepalived</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl -daemon-reload #重新加载系统服务#重新加载系统服务</span><br><span class="line"></span><br><span class="line">systemctl start keepalived.service  #启动keepalived</span><br><span class="line">ps aux |grep keepalived  #查看keepalived进程</span><br></pre></td></tr></table></figure>
+
+<h1 id="keepalived实现双机主备高可用"><a href="#keepalived实现双机主备高可用" class="headerlink" title="keepalived实现双机主备高可用"></a>keepalived实现双机主备高可用</h1><h2 id="实现环境"><a href="#实现环境" class="headerlink" title="实现环境"></a>实现环境</h2><p>虚拟ip&#x2F;vip:192.168.10.21</p>
+<p>nginx-keepliaved-master:192.168.1.11<br>index.html主页内容为<code>keepalived-nginx-192.168.10.11</code></p>
+<p>nginx-keepliaved-backup:192.168.1.12<br>index.html主页内容为<code>keepalived-nginx-192.168.10.12</code></p>
+<h2 id="keepalived配置"><a href="#keepalived配置" class="headerlink" title="keepalived配置"></a>keepalived配置</h2><ol>
+<li>nginx-keepliaved-master机器配置</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/keepalived/keepalived.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1 global_defs &#123;</span><br><span class="line">  2    #路由id:当前安装keepalived节点主机的标识符,全局唯一的</span><br><span class="line">  3    router_id keep_11</span><br><span class="line">  4 &#125;</span><br><span class="line">  5 </span><br><span class="line">  6 </span><br><span class="line">  7 #计算机节点</span><br><span class="line">  8 vrrp_instance VI_1 &#123;</span><br><span class="line">  9     # 表示的状态,当前的主节点 MASTER/BACKUP</span><br><span class="line"> 10     state MASTER</span><br><span class="line"> 11     # 当前实例绑定的网卡</span><br><span class="line"> 12     interface ens32</span><br><span class="line"> 13     # 保证主备节点一致</span><br><span class="line"> 14     virtual_router_id 51</span><br><span class="line"> 15     # 优先级/权重,谁的优先级高,在MASTER挂掉以后,谁就能成为MASTER</span><br><span class="line"> 16     priority 100</span><br><span class="line"> 17     # 主备之间同步检查的时间间隔,默认1s</span><br><span class="line"> 18     advert_int 1</span><br><span class="line"> 19     # 认证授权的密码,防止非法节点的进入</span><br><span class="line"> 20     authentication &#123;</span><br><span class="line"> 21         auth_type PASS</span><br><span class="line"> 22         auth_pass 1111</span><br><span class="line"> 23     &#125;</span><br><span class="line"> 24 </span><br><span class="line"> 25     virtual_ipaddress &#123;</span><br><span class="line"> 26         192.168.10.21</span><br><span class="line"> 27     &#125;</span><br><span class="line"> 28 &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart keepalived</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ol start="2">
+<li>nginx-keepliaved-backup机器配置</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/keepalived/keepalived.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1 global_defs &#123;</span><br><span class="line">  2    #路由id:当前安装keepalived节点主机的标识符,全局唯一的</span><br><span class="line">  3    router_id keep_12</span><br><span class="line">  4 &#125;</span><br><span class="line">  5 </span><br><span class="line">  6 </span><br><span class="line">  7 #计算机节点</span><br><span class="line">  8 vrrp_instance VI_1 &#123;</span><br><span class="line">  9     # 表示的状态,当前的主节点 MASTER/BACKUP</span><br><span class="line"> 10     state BACKUP</span><br><span class="line"> 11     # 当前实例绑定的网卡</span><br><span class="line"> 12     interface ens32</span><br><span class="line"> 13     # 保证主备节点一致</span><br><span class="line"> 14     virtual_router_id 51</span><br><span class="line"> 15     # 优先级/权重,谁的优先级高,在MASTER挂掉以后,谁就能成为MASTER</span><br><span class="line"> 16     priority 100</span><br><span class="line"> 17     # 主备之间同步检查的时间间隔,默认1s</span><br><span class="line"> 18     advert_int 1</span><br><span class="line"> 19     # 认证授权的密码,防止非法节点的进入</span><br><span class="line"> 20     authentication &#123;</span><br><span class="line"> 21         auth_type PASS</span><br><span class="line"> 22         auth_pass 1111</span><br><span class="line"> 23     &#125;</span><br><span class="line"> 24 </span><br><span class="line"> 25     virtual_ipaddress &#123;</span><br><span class="line"> 26         192.168.10.21</span><br><span class="line"> 27     &#125;</span><br><span class="line"> 28 &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart keepalived</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ol>
+<li>访问虚拟ip192.168.10.21<br>我们可以看到页面显示的内容是192.168.10.11的内容 因为他是master<br><img src="http://www.tom-blog.cn/usr/uploads/2022/01/849625382.png" alt="1.png"></li>
+<li>我们把master 也就是192.168.10.11的keepalived关闭也模拟一下机器故障  让backup:192.168.10.12自动提升为master 继续提供web服务</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl stop keepalived</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>我们在访问虚拟ip<br>可以看到backup:192.168.10.12 也就是备用机 已经变成master了<br><img src="http://www.tom-blog.cn/usr/uploads/2022/01/3407411815.png" alt="2.png"></li>
+<li>我们在去master:192.168.10.11 模拟一下 机器故障已经被修复好了  测试一下访问虚拟ip的时候页面会是什么内容</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl start keepalived</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="keepalived配置nginx自动重启"><a href="#keepalived配置nginx自动重启" class="headerlink" title="keepalived配置nginx自动重启"></a>keepalived配置nginx自动重启</h1><h2 id="实现场景"><a href="#实现场景" class="headerlink" title="实现场景"></a>实现场景</h2><p>基于上个实验做好的环境</p>
+<p>上次实验我们可以发现我们配置的只是keepalived发生故障,我们才切换主备机器. 但是如果是nginx服务发生故障的话  我们就不能使用了</p>
+<p>所以现在这个实验做的是keepalived配置nginx自动重启</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>如果你用的是centos7安装最小化的请安装以下软件包  因为下面的shell脚本需要killall命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">centos7精简安装后,使用中发现没有killall命令。 安装这个包即可: yum install psmisc</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>我们先去&#x2F;etc&#x2F;keepalived下 创建一个名字为<code>check_nginx_alive.sh </code>内容为以下</li>
+</ol>
+<p>然后还需要配置以下权限:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 check_nginx_alive.sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/keepalived/check_nginx_alive.sh</span><br><span class="line"></span><br><span class="line">test=`ps -C nginx --no-header |wc -l`</span><br><span class="line">if [ $test -eq 0 ];then</span><br><span class="line">	/usr/local/nginx/sbin/nginx</span><br><span class="line">	sleep 2</span><br><span class="line">	if [ `ps -C nginx --no-header |wc -l` -eq 0 ];then</span><br><span class="line">		killall keepalived</span><br><span class="line">	fi</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>这个shell脚本是意思是:<br>查找nginx进程 如果没有找到nginx进程 就运行nginx<br>然后在进行查找nginx进程有没有开启<br>没有开启的话 就结束keepalived进程</p>
+<p>因为keepalived发生故障的话 会自动切换到备用机</p>
+<ol start="2">
+<li>配置keepalived配置文件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/keepalived/keepalived.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;</span><br><span class="line">   #路由id:当前安装keepalived节点主机的标识符,全局唯一的</span><br><span class="line">   router_id keep_11</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vrrp_script check_nginx_alive &#123;</span><br><span class="line">	script &quot;/etc/keepalived/check_nginx_alive.sh&quot;</span><br><span class="line">	interval 2 #每隔两秒运行上一行脚本</span><br><span class="line">	weight 10 #如果脚本运行成功,则升级权重+10</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#计算机节点</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    # 表示的状态,当前的主节点 MASTER/BACKUP</span><br><span class="line">    state MASTER</span><br><span class="line">    # 当前实例绑定的网卡</span><br><span class="line">    interface ens32</span><br><span class="line">    # 保证主备节点一致</span><br><span class="line">    virtual_router_id 51</span><br><span class="line">    # 优先级/权重,谁的优先级高,在MASTER挂掉以后,谁就能成为MASTER</span><br><span class="line">    priority 100</span><br><span class="line">    # 主备之间同步检查的时间间隔,默认1s</span><br><span class="line">    advert_int 1</span><br><span class="line">    # 认证授权的密码,防止非法节点的进入</span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">track_script &#123;</span><br><span class="line">	check_nginx_alive #追踪nginx脚本</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.10.21</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实我们添加的内容就是这两个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vrrp_script check_nginx_alive &#123;</span><br><span class="line">	script &quot;/etc/keepalived/check_nginx_alive.sh&quot;</span><br><span class="line">	interval 2 #每隔两秒运行上一行脚本</span><br><span class="line">	weight 10 #如果脚本运行成功,则升级权重+10</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">track_script &#123;</span><br><span class="line">	check_nginx_alive #追踪nginx脚本</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重启keepalived</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart keepalived</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h2><h3 id="测试一"><a href="#测试一" class="headerlink" title="测试一"></a>测试一</h3><p>我们去master机器模拟一下nginx挂掉<br>看配置的脚本能不能自动实现自动重启</p>
+<ol>
+<li>关闭master的nginx</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s stop</span><br></pre></td></tr></table></figure>
+
+<p>发现keepalived的配置已经自动运行shell脚本重启nginx了</p>
+<p>但是只要我们速度快结束nginx进程的同时 快速刷新 还是能看到报错的  但是不影响</p>
+<h3 id="测试二"><a href="#测试二" class="headerlink" title="测试二"></a>测试二</h3><p>上面的测试一我们已经看到关闭nginx keepalived确实会帮我们自动执行shell脚本重启nginx</p>
+<p>我们测试二测试的是nginx重启不了的场景</p>
+<p>我们模拟一下nginx重启不了的场景:<br>我们把&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;nginx 这个文件改名为其他</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx/sbin</span><br><span class="line">mv nginx nginx_bak</span><br></pre></td></tr></table></figure>
+
+<p>然后我们用已经改好名的nginx 重启关闭一下<br>这样的话 我们之前写的脚本启动nginx程序的命令 就会报错了  因为找不到nginx命令位置 所以他会结束keepalived全部进程</p>
+<p>keepalived发生故障的话 会自动切换到备用机</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx_bak -s stop</span><br></pre></td></tr></table></figure>
+
+<p>我们在访问虚拟ip:192.168.10.21</p>
+<p>可以看到已经切换到备用机了!</p>
+<p>我们在把nginx名字改回来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv nginx_bak nginx</span><br></pre></td></tr></table></figure>
+
+<p>再去访问虚拟ip</p>
+<p>会发现192.168.10.11已经变回master了</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/Tools">Tools</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Keepalived%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Keepalived简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#keepalived%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">keepalived的作用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">主配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8keepalived"><span class="toc-number">3.1.</span> <span class="toc-text">启动keepalived</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#keepalived%E6%B3%A8%E5%86%8C%E4%B8%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.</span> <span class="toc-text">keepalived注册为系统服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#keepalived%E5%AE%9E%E7%8E%B0%E5%8F%8C%E6%9C%BA%E4%B8%BB%E5%A4%87%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">keepalived实现双机主备高可用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E7%8E%AF%E5%A2%83"><span class="toc-number">5.1.</span> <span class="toc-text">实现环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#keepalived%E9%85%8D%E7%BD%AE"><span class="toc-number">5.2.</span> <span class="toc-text">keepalived配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">5.3.</span> <span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#keepalived%E9%85%8D%E7%BD%AEnginx%E8%87%AA%E5%8A%A8%E9%87%8D%E5%90%AF"><span class="toc-number">6.</span> <span class="toc-text">keepalived配置nginx自动重启</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%9C%BA%E6%99%AF"><span class="toc-number">6.1.</span> <span class="toc-text">实现场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">6.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95-1"><span class="toc-number">6.3.</span> <span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%80"><span class="toc-number">6.3.1.</span> <span class="toc-text">测试一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E4%BA%8C"><span class="toc-number">6.3.2.</span> <span class="toc-text">测试二</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&text=Keepalived学习笔记"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Keepalived学习笔记"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&is_video=false&description=Keepalived学习笔记"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Keepalived学习笔记&body=Check out this article: http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Keepalived学习笔记"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Keepalived学习笔记"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Keepalived学习笔记"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=Keepalived学习笔记"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&name=Keepalived学习笔记&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/Keepalived%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&t=Keepalived学习笔记"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Tom
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
