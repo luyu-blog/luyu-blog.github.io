@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="openvpn搭建123456789server03openvpn服务端：192.168.10.3clientopenvpn客户端：10.10.100.100  server03配置安装12apt install openvpnapt install easy-rsa  生成证书创建证书目录此目录任意命名 12make-cadir cacd ca  初始化1.&#x2F;easyrsa init-pki">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络系统管理技能大赛|debian-配置openvpn">
+<meta property="og:url" content="http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/index.html">
+<meta property="og:site_name" content="Tom">
+<meta property="og:description" content="openvpn搭建123456789server03openvpn服务端：192.168.10.3clientopenvpn客户端：10.10.100.100  server03配置安装12apt install openvpnapt install easy-rsa  生成证书创建证书目录此目录任意命名 12make-cadir cacd ca  初始化1.&#x2F;easyrsa init-pki">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-29T08:31:48.000Z">
+<meta property="article:modified_time" content="2023-01-29T08:32:23.799Z">
+<meta property="article:author" content="Tom">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>网络系统管理技能大赛|debian-配置openvpn</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/01/28/cicd/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&text=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&title=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&is_video=false&description=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=网络系统管理技能大赛|debian-配置openvpn&body=Check out this article: http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&title=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&title=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&title=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&title=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&name=网络系统管理技能大赛|debian-配置openvpn&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&t=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#openvpn%E6%90%AD%E5%BB%BA"><span class="toc-number">1.</span> <span class="toc-text">openvpn搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#server03%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">server03配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6"><span class="toc-number">2.2.</span> <span class="toc-text">生成证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%AF%81%E4%B9%A6%E7%9B%AE%E5%BD%95"><span class="toc-number">2.2.1.</span> <span class="toc-text">创建证书目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.2.2.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6"><span class="toc-number">2.2.3.</span> <span class="toc-text">创建根证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%81%E4%B9%A6%E5%92%8C%E7%A7%81%E9%92%A5"><span class="toc-number">2.2.4.</span> <span class="toc-text">生成服务器证书和私钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%81%E4%B9%A6%E5%92%8C%E7%A7%81%E9%92%A5"><span class="toc-number">2.2.5.</span> <span class="toc-text">生成客户端证书和私钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BADiffie-Hellman-%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.6.</span> <span class="toc-text">创建Diffie-Hellman 密钥交换算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAHmac-%E6%B6%88%E6%81%AF%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.7.</span> <span class="toc-text">创建Hmac 消息摘要算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEvpn"><span class="toc-number">2.3.</span> <span class="toc-text">配置vpn</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#client%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">client配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85openvpn"><span class="toc-number">3.1.</span> <span class="toc-text">安装openvpn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#server03%E6%93%8D%E4%BD%9C%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E5%88%B0client"><span class="toc-number">3.2.</span> <span class="toc-text">server03操作复制文件到client</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.3.</span> <span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8openvpn"><span class="toc-number">3.4.</span> <span class="toc-text">启动openvpn</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        网络系统管理技能大赛|debian-配置openvpn
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Tom</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-29T08:31:48.000Z" itemprop="datePublished">2023-01-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="openvpn搭建"><a href="#openvpn搭建" class="headerlink" title="openvpn搭建"></a>openvpn搭建</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server03</span><br><span class="line">openvpn服务端：</span><br><span class="line">192.168.10.3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client</span><br><span class="line">openvpn客户端：</span><br><span class="line">10.10.100.100</span><br></pre></td></tr></table></figure>
+
+<h1 id="server03配置"><a href="#server03配置" class="headerlink" title="server03配置"></a>server03配置</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install openvpn</span><br><span class="line">apt install easy-rsa</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成证书"><a href="#生成证书" class="headerlink" title="生成证书"></a>生成证书</h2><h3 id="创建证书目录"><a href="#创建证书目录" class="headerlink" title="创建证书目录"></a>创建证书目录</h3><p>此目录任意命名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make-cadir ca</span><br><span class="line">cd ca</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./easyrsa init-pki</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建根证书"><a href="#创建根证书" class="headerlink" title="创建根证书"></a>创建根证书</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">./easyrsa build-ca nopass # 不使用密码 </span><br><span class="line"></span><br><span class="line"># 要求输入 Common Name，或者直接回车，不输入 </span><br><span class="line">$ Common Name (eg: your user, host, or server name) [Easy-RSA CA]:mycroft</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">生成的根证书地址：ca/pki/ca.crt</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成服务器证书和私钥"><a href="#生成服务器证书和私钥" class="headerlink" title="生成服务器证书和私钥"></a>生成服务器证书和私钥</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./easyrsa build-server-full vpnserver nopass</span><br><span class="line"></span><br><span class="line">生成的服务器证书和私钥地址：</span><br><span class="line">ca/pki/issued/vpnserver.crt</span><br><span class="line">ca/pki/private/vpnserver.key</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成客户端证书和私钥"><a href="#生成客户端证书和私钥" class="headerlink" title="生成客户端证书和私钥"></a>生成客户端证书和私钥</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./easyrsa build-client-full vpnclient nopass</span><br><span class="line"></span><br><span class="line">生成的客户端证书和私钥地址：</span><br><span class="line">/path/to/ca/pki/issued/vpnclient.crt、</span><br><span class="line">/path/to/ca/pki/private/vpnclient.key</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建Diffie-Hellman-密钥交换算法"><a href="#创建Diffie-Hellman-密钥交换算法" class="headerlink" title="创建Diffie-Hellman 密钥交换算法"></a>创建Diffie-Hellman 密钥交换算法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./easyrsa gen-dh</span><br><span class="line"></span><br><span class="line">时间会有点长，耐心等待。</span><br><span class="line">生成的dh地址：/path/to/ca/pki/dh.pem。</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建Hmac-消息摘要算法"><a href="#创建Hmac-消息摘要算法" class="headerlink" title="创建Hmac 消息摘要算法"></a>创建Hmac 消息摘要算法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">openvpn --genkey --secret ta.key</span><br><span class="line">我debian11命令 </span><br><span class="line">报错参数--secret 已经被换成secret</span><br><span class="line"></span><br><span class="line">openvpn --genkey secret ta.key</span><br><span class="line"></span><br><span class="line">你自己试试你的</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置vpn"><a href="#配置vpn" class="headerlink" title="配置vpn"></a>配置vpn</h2><ol>
+<li>将生成的服务端文件拷贝到OpenVPN配置文件夹</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp pki/ca.crt  /etc/openvpn/</span><br><span class="line">cp pki/issued/vpnserver.crt  /etc/openvpn/</span><br><span class="line">cp pki/private/vpnserver.key /etc/openvpn/</span><br><span class="line">cp pki/dh.pem /etc/openvpn/</span><br><span class="line">cp ta.key /etc/openvpn/</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>服务端配置</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf /etc/openvpn/</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>修改配置文件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/openvpn/server.conf</span><br><span class="line"></span><br><span class="line">服务端证书：cert vpnserver.crt</span><br><span class="line">服务端私钥：key vpnserver.key</span><br><span class="line">dh密钥交换算法：dh dh.pem</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>启动openvpn服务端</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start openvpn@server</span><br></pre></td></tr></table></figure>
+
+<h1 id="client配置"><a href="#client配置" class="headerlink" title="client配置"></a>client配置</h1><h2 id="安装openvpn"><a href="#安装openvpn" class="headerlink" title="安装openvpn"></a>安装openvpn</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt -y install openvpn</span><br></pre></td></tr></table></figure>
+
+<h2 id="server03操作复制文件到client"><a href="#server03操作复制文件到client" class="headerlink" title="server03操作复制文件到client"></a>server03操作复制文件到client</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd ca</span><br><span class="line">scp pki/ca.crt root@10.10.100.100:/etc/openvpn</span><br><span class="line"></span><br><span class="line">scp pki/issued/vpnclient.crt root@10.10.100.100:/etc/openvpn</span><br><span class="line"></span><br><span class="line">scp pki/private/vpnclient.key root@10.10.100.100:/etc/openvpn</span><br><span class="line"></span><br><span class="line">scp ta.key root@10.10.100.100:/etc/openvpn</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf /etc/openvpn</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/openvpn/client.conf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">服务器地址：remote 192.168.10.3 1194</span><br><span class="line">配置根证书（内联行）：把ca证书放在&lt;ca&gt;&lt;/ca&gt;中</span><br><span class="line">配置客户端证书（内联行）：把vpnclient.crt放在&lt;cert&gt;&lt;/cert&gt;中</span><br><span class="line">配置客户端私钥内容（内联行）：把vpnclient.key放在&lt;key&gt;&lt;/key&gt;中</span><br><span class="line">配置HMAC（内联行）：把ta.key放在&lt;tls-auth&gt;&lt;/tls-auth&gt;中</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动openvpn"><a href="#启动openvpn" class="headerlink" title="启动openvpn"></a>启动openvpn</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl start openvpn@client</span><br><span class="line"></span><br><span class="line">ifconfig tun0</span><br><span class="line">看到这网卡有ip就代表成功了</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/Tools">Tools</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#openvpn%E6%90%AD%E5%BB%BA"><span class="toc-number">1.</span> <span class="toc-text">openvpn搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#server03%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">server03配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6"><span class="toc-number">2.2.</span> <span class="toc-text">生成证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%AF%81%E4%B9%A6%E7%9B%AE%E5%BD%95"><span class="toc-number">2.2.1.</span> <span class="toc-text">创建证书目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.2.2.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6"><span class="toc-number">2.2.3.</span> <span class="toc-text">创建根证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%81%E4%B9%A6%E5%92%8C%E7%A7%81%E9%92%A5"><span class="toc-number">2.2.4.</span> <span class="toc-text">生成服务器证书和私钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%81%E4%B9%A6%E5%92%8C%E7%A7%81%E9%92%A5"><span class="toc-number">2.2.5.</span> <span class="toc-text">生成客户端证书和私钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BADiffie-Hellman-%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.6.</span> <span class="toc-text">创建Diffie-Hellman 密钥交换算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAHmac-%E6%B6%88%E6%81%AF%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.7.</span> <span class="toc-text">创建Hmac 消息摘要算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEvpn"><span class="toc-number">2.3.</span> <span class="toc-text">配置vpn</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#client%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">client配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85openvpn"><span class="toc-number">3.1.</span> <span class="toc-text">安装openvpn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#server03%E6%93%8D%E4%BD%9C%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E5%88%B0client"><span class="toc-number">3.2.</span> <span class="toc-text">server03操作复制文件到client</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.3.</span> <span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8openvpn"><span class="toc-number">3.4.</span> <span class="toc-text">启动openvpn</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&text=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&title=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&is_video=false&description=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=网络系统管理技能大赛|debian-配置openvpn&body=Check out this article: http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&title=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&title=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&title=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&title=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&name=网络系统管理技能大赛|debian-配置openvpn&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/29/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-debian-%E9%85%8D%E7%BD%AEopenvpn/&t=网络系统管理技能大赛|debian-配置openvpn"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Tom
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/Tools">Tools</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
