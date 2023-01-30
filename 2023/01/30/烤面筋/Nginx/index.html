@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="nginx什么是Nginx？1Nginx是一个 轻量级&#x2F;高性能的反向代理Web服务器，他实现非常高效的反向代理、负载均衡，他可以处理2-3万并发连接数，官方监测能支持5万并发，  为什么要用Nginx？1跨平台、配置简单、反向代理、高并发连接：处理2-3万并发连接数，官方监测能支持5万并发，内存消耗小，nginx处理静态文件好  为什么Nginx性能这么高？ 因为他的事件处理机制：异步非阻塞事件处">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tom &#96;blog">
+<meta property="og:url" content="http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/index.html">
+<meta property="og:site_name" content="Tom &#96;blog">
+<meta property="og:description" content="nginx什么是Nginx？1Nginx是一个 轻量级&#x2F;高性能的反向代理Web服务器，他实现非常高效的反向代理、负载均衡，他可以处理2-3万并发连接数，官方监测能支持5万并发，  为什么要用Nginx？1跨平台、配置简单、反向代理、高并发连接：处理2-3万并发连接数，官方监测能支持5万并发，内存消耗小，nginx处理静态文件好  为什么Nginx性能这么高？ 因为他的事件处理机制：异步非阻塞事件处">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-30T12:27:38.017Z">
+<meta property="article:modified_time" content="2023-01-30T12:28:26.535Z">
+<meta property="article:author" content="Tom">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Tom `blog</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">推荐软件</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Docker/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&text="><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&title="><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&is_video=false&description="><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&body=Check out this article: http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&title="><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&title="><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&title="><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&title="><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&name=&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&t="><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nginx"><span class="toc-number">1.</span> <span class="toc-text">nginx</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNginx%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">什么是Nginx？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Nginx%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">为什么要用Nginx？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88Nginx%E6%80%A7%E8%83%BD%E8%BF%99%E4%B9%88%E9%AB%98%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">为什么Nginx性能这么高？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%E7%9A%84%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">Nginx怎么处理请求的？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%9F"><span class="toc-number">6.</span> <span class="toc-text">什么是正向代理和反向代理？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BC%98%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">7.</span> <span class="toc-text">使用反向代理服务器的优点是什么?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">Nginx的优缺点？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9F"><span class="toc-number">9.</span> <span class="toc-text">Nginx应用场景？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E6%80%8E%E4%B9%88%E9%85%8D%E7%BD%AE"><span class="toc-number">10.</span> <span class="toc-text">Nginx虚拟主机怎么配置?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="toc-number">11.</span> <span class="toc-text">Nginx 常用命令有哪些</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nginx%E4%B8%AD500%E3%80%81502%E3%80%81503%E3%80%81504-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-number">12.</span> <span class="toc-text">nginx中500、502、503、504 有什么区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx-%E5%8E%8B%E7%BC%A9%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BC%80%E5%90%AF%E5%8E%8B%E7%BC%A9%EF%BC%9F"><span class="toc-number">13.</span> <span class="toc-text">Nginx 压缩了解吗，如何开启压缩？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E5%92%8CApache%E5%8C%BA%E5%88%AB"><span class="toc-number">14.</span> <span class="toc-text">Nginx和Apache区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#location%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">15.</span> <span class="toc-text">location的作用是什么？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB%EF%BC%9F"><span class="toc-number">16.</span> <span class="toc-text">为什么要做动静分离？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%9A%84%E7%AE%97%E6%B3%95%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84-%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="toc-number">17.</span> <span class="toc-text">Nginx负载均衡的算法怎么实现的?策略有哪些?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#url-hash-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%8F%92%E4%BB%B6"><span class="toc-number">18.</span> <span class="toc-text">url_hash(第三方插件)</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Tom</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-30T12:27:38.017Z" itemprop="datePublished">2023-01-30</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h1><h1 id="什么是Nginx？"><a href="#什么是Nginx？" class="headerlink" title="什么是Nginx？"></a>什么是Nginx？</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Nginx是一个 轻量级/高性能的反向代理Web服务器，他实现非常高效的反向代理、负载均衡，他可以处理2-3万并发连接数，官方监测能支持5万并发，</span><br></pre></td></tr></table></figure>
+
+<h1 id="为什么要用Nginx？"><a href="#为什么要用Nginx？" class="headerlink" title="为什么要用Nginx？"></a>为什么要用Nginx？</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">跨平台、配置简单、反向代理、高并发连接：处理2-3万并发连接数，官方监测能支持5万并发，内存消耗小，nginx处理静态文件好</span><br></pre></td></tr></table></figure>
+
+<h1 id="为什么Nginx性能这么高？"><a href="#为什么Nginx性能这么高？" class="headerlink" title="为什么Nginx性能这么高？"></a>为什么Nginx性能这么高？</h1><ul>
+<li>因为他的事件处理机制：异步非阻塞事件处理：运用了epoll模型，提供了一个队列，排队解决</li>
+</ul>
+<h1 id="Nginx怎么处理请求的？"><a href="#Nginx怎么处理请求的？" class="headerlink" title="Nginx怎么处理请求的？"></a>Nginx怎么处理请求的？</h1><ul>
+<li>nginx接收一个请求后，首先由listen和server_name指令匹配server模块，再匹配server模块里的location，location就是实际地址</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;            		    	<span class="comment"># 第一个Server区块开始，表示一个独立的虚拟主机站点</span></span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>；      		        <span class="comment"># 提供服务的端口，默认80</span></span><br><span class="line">    server_name  localhost；    		<span class="comment"># 提供服务的域名主机名</span></span><br><span class="line">    location / &#123;            	        <span class="comment"># 第一个location区块开始</span></span><br><span class="line">        <span class="attribute">root</span>   html；       		<span class="comment"># 站点的根目录，相当于Nginx的安装目录</span></span><br><span class="line">        index  index.html index.htm；    	<span class="comment"># 默认的首页文件，多个用空格分开</span></span><br><span class="line">    &#125;          				<span class="comment"># 第一个location区块结果</span></span><br><span class="line">&#125;         </span><br></pre></td></tr></table></figure>
+
+<h1 id="什么是正向代理和反向代理？"><a href="#什么是正向代理和反向代理？" class="headerlink" title="什么是正向代理和反向代理？"></a>什么是正向代理和反向代理？</h1><ol>
+<li><p>正向代理就是一个人发送一个请求直接就到达了目标的服务器</p>
+</li>
+<li><p>反向代理就是请求统一被Nginx接收，nginx反向代理服务器接收到之后，按照一定的规则分发给后端的服务器进行处理</p>
+</li>
+</ol>
+<h1 id="使用反向代理服务器的优点是什么"><a href="#使用反向代理服务器的优点是什么" class="headerlink" title="使用反向代理服务器的优点是什么?"></a>使用反向代理服务器的优点是什么?</h1><ul>
+<li>反向代理服务器可以隐藏源服务器的存在和特征。它充当互联网云和web服务器之间的中间层。这对于安全方面来说是很好的，特别是当您使用web托管服务时。</li>
+</ul>
+<h1 id="Nginx的优缺点？"><a href="#Nginx的优缺点？" class="headerlink" title="Nginx的优缺点？"></a>Nginx的优缺点？</h1><p>优点：</p>
+<ol start="3">
+<li><p>占内存小，可实现高并发连接，处理响应快</p>
+</li>
+<li><p>可实现http服务器、虚拟主机、反向代理、负载均衡</p>
+</li>
+<li><p>Nginx配置简单</p>
+</li>
+<li><p>可以不暴露正式的服务器IP地址</p>
+</li>
+</ol>
+<ul>
+<li>缺点： 处理动态页面则很鸡肋，现在一般前端用nginx作为反向代理抗住压力</li>
+</ul>
+<h1 id="Nginx应用场景？"><a href="#Nginx应用场景？" class="headerlink" title="Nginx应用场景？"></a>Nginx应用场景？</h1><ul>
+<li><p>http服务器。Nginx是一个http服务可以独立提供http服务。可以做网页静态服务器。</p>
+</li>
+<li><p>虚拟主机。可以实现在一台服务器虚拟出多个网站，例如个人网站使用的虚拟机。</p>
+</li>
+<li><p>反向代理，负载均衡。当网站的访问量达到一定程度后，单台服务器不能满足用户的请求时，需要用多台服务器集群可以使用nginx做反向代理。并且多台服务器可以平均分担负载，不会应为某台服务器负载高宕机而某台服务器闲置的情况。</p>
+</li>
+<li><p>nginx 中也可以配置安全管理、比如可以使用Nginx搭建API接口网关,对每个接口服务进行拦截。</p>
+</li>
+</ul>
+<h1 id="Nginx虚拟主机怎么配置"><a href="#Nginx虚拟主机怎么配置" class="headerlink" title="Nginx虚拟主机怎么配置?"></a>Nginx虚拟主机怎么配置?</h1><ul>
+<li><p>1、基于域名的虚拟主机，通过域名来区分虚拟主机——应用：外部网站</p>
+</li>
+<li><p>2、基于端口的虚拟主机，通过端口来区分虚拟主机——应用：公司内部网站，外部网站的管理后台</p>
+</li>
+<li><p>3、基于ip的虚拟主机。</p>
+</li>
+</ul>
+<h1 id="Nginx-常用命令有哪些"><a href="#Nginx-常用命令有哪些" class="headerlink" title="Nginx 常用命令有哪些"></a>Nginx 常用命令有哪些</h1><ul>
+<li><p>启动 <code>nginx</code> 。</p>
+</li>
+<li><p>停止 <code>nginx -s stop</code> 或 <code>nginx -s quit</code> 。</p>
+</li>
+<li><p>重启 <code>nginx -s reload</code> 或 <code>service nginx reload</code> 。</p>
+</li>
+<li><p>重载指定配置文件 <code>nginx -c /usr/local/nginx/conf/nginx.conf</code> 。</p>
+</li>
+<li><p>查看 nginx 版本 <code>nginx -v</code> 。</p>
+</li>
+</ul>
+<h1 id="nginx中500、502、503、504-有什么区别"><a href="#nginx中500、502、503、504-有什么区别" class="headerlink" title="nginx中500、502、503、504 有什么区别"></a>nginx中500、502、503、504 有什么区别</h1><p><strong>500</strong>：</p>
+<p>Internal Server Error 内部服务错误，比如脚本错误，编程语言语法错误。</p>
+<p><strong>502</strong>：</p>
+<p>Bad Gateway错误，网关错误。比如服务器当前连接太多，响应太慢，页面素材太多、带宽慢。</p>
+<p><strong>503</strong>：</p>
+<p>Service Temporarily Unavailable，服务不可用，web服务器不能处理HTTP请求，可能是临时超载或者是服务器进行停机维护。</p>
+<p><strong>504</strong>：</p>
+<p>Gateway timeout 网关超时，程序执行时间过长导致响应超时，例如程序需要执行20秒，而nginx最大响应等待时间为10秒，这样就会出现超时。</p>
+<h1 id="Nginx-压缩了解吗，如何开启压缩？"><a href="#Nginx-压缩了解吗，如何开启压缩？" class="headerlink" title="Nginx 压缩了解吗，如何开启压缩？"></a>Nginx 压缩了解吗，如何开启压缩？</h1><p>开启nginx gzip压缩后，图片、css、js等静态资源的大小会减小，可节省带宽，提高传输效率，但是会消耗CPU资源。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启gzip</span></span><br><span class="line">  <span class="attribute">gzip</span> <span class="literal">off</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 启用gzip压缩的最小文件，小于设置值的文件将不会压缩</span></span><br><span class="line">  <span class="attribute">gzip_min_length</span> <span class="number">1k</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># gzip 压缩级别，1-9，数字越大压缩的越好，也越占用CPU时间，后面会有详细说明</span></span><br><span class="line">  <span class="attribute">gzip_comp_level</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 进行压缩的文件类型。javascript有多种形式。其中的值可以在 mime.types 文件中找到。</span></span><br><span class="line">  <span class="attribute">gzip_types</span> text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png application/vnd.ms-fontobject font/ttf font/opentype font/x-woff image/svg+xml;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Nginx和Apache区别"><a href="#Nginx和Apache区别" class="headerlink" title="Nginx和Apache区别"></a>Nginx和Apache区别</h1><p>1）Nginx轻量级，同样起web 服务，比apache占用更少的内存及资源 。</p>
+<p>2）Nginx 抗并发，nginx 处理请求是异步非阻塞的，而apache 则是阻塞型的，在高并发下nginx 能保持低资源低消耗高性能 。</p>
+<p>3）Nginx提供负载均衡，可以做做反向代理，前端服务器</p>
+<p>4）Nginx多进程单线程，异步非阻塞；Apache多进程同步，阻塞。</p>
+<h1 id="location的作用是什么？"><a href="#location的作用是什么？" class="headerlink" title="location的作用是什么？"></a>location的作用是什么？</h1><ul>
+<li>location指令的作用是根据用户请求的URI来执行不同的应用，也就是根据用户请求的网站URL进行匹配，匹配成功即进行相关的操作。</li>
+</ul>
+<h1 id="为什么要做动静分离？"><a href="#为什么要做动静分离？" class="headerlink" title="为什么要做动静分离？"></a>为什么要做动静分离？</h1><ul>
+<li><p>Nginx的静态处理能力很强，但是动态处理能力不足，因此，在企业中常用动静分离技术。</p>
+</li>
+<li><p>对于静态资源比如图片，js，css等文件，我们则在反向代理服务器nginx中进行缓存。这样浏览器在请求一个静态资源时，代理服务器nginx就可以直接处理，无需将请求转发给后端服务器tomcat。<br>若用户请求的动态文件，比如servlet,jsp则转发给Tomcat服务器处理，从而实现动静分离。这也是反向代理服务器的一个重要的作用。</p>
+</li>
+</ul>
+<h1 id="Nginx负载均衡的算法怎么实现的-策略有哪些"><a href="#Nginx负载均衡的算法怎么实现的-策略有哪些" class="headerlink" title="Nginx负载均衡的算法怎么实现的?策略有哪些?"></a>Nginx负载均衡的算法怎么实现的?策略有哪些?</h1><ul>
+<li>为了避免服务器崩溃，大家会通过负载均衡的方式来分担服务器压力。将对多台服务器组成一个集群，当用户访问时，先访问到一个转发服务器，再由转发服务器将访问分发到压力更小的服务器。</li>
+</ul>
+<p>轮询(默认)</p>
+<ul>
+<li>每个请求按时间顺序逐一分配到不同的后端服务器，如果后端某个服务器宕机，能自动剔除故障系统。</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">upstream</span> backserver &#123; </span><br><span class="line"> <span class="attribute">server</span> <span class="number">192.168.0.12</span>; </span><br><span class="line"> <span class="attribute">server</span> <span class="number">192.168.0.13</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>权重 weight</p>
+<ul>
+<li>weight的值越大分配到的访问概率越高，主要用于后端每台服务器性能不均衡的情况下。其次是为在主从的情况下设置不同的权值，达到合理有效的地利用主机资源。</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">upstream</span> backserver &#123; </span><br><span class="line"> <span class="attribute">server</span> <span class="number">192.168.0.12</span> weight=<span class="number">2</span>; </span><br><span class="line"> <span class="attribute">server</span> <span class="number">192.168.0.13</span> weight=<span class="number">8</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>ip_hash( IP绑定)</p>
+<ul>
+<li>每个请求按访问IP的哈希结果分配，使来自同一个IP的访客固定访问一台后端服务器，<code>并且可以有效解决动态网页存在的session共享问题</code></li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">upstream</span> backserver &#123; </span><br><span class="line"> ip_hash; </span><br><span class="line"> <span class="attribute">server</span> <span class="number">192.168.0.12:88</span>; </span><br><span class="line"> <span class="attribute">server</span> <span class="number">192.168.0.13:80</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>fair(第三方插件)</p>
+<ul>
+<li><p>必须安装upstream_fair模块。</p>
+</li>
+<li><p>对比 weight、ip_hash更加智能的负载均衡算法，fair算法可以根据页面大小和加载时间长短智能地进行负载均衡，响应时间短的优先分配。</p>
+</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">upstream</span> backserver &#123; </span><br><span class="line"> <span class="attribute">server</span> server1; </span><br><span class="line"> <span class="attribute">server</span> server2; </span><br><span class="line"> fair; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 哪个服务器的响应速度快，就将请求分配到那个服务器上。</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="url-hash-第三方插件"><a href="#url-hash-第三方插件" class="headerlink" title="url_hash(第三方插件)"></a>url_hash(第三方插件)</h1><ul>
+<li><p>必须安装Nginx的hash软件包</p>
+</li>
+<li><p>按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，可以进一步提高后端缓存服务器的效率。</p>
+</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">upstream</span> backserver &#123; </span><br><span class="line"> <span class="attribute">server</span> squid1:<span class="number">3128</span>; </span><br><span class="line"> <span class="attribute">server</span> squid2:<span class="number">3128</span>; </span><br><span class="line"> <span class="attribute">hash</span> <span class="variable">$request_uri</span>; </span><br><span class="line"> <span class="attribute">hash_method</span> crc32; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<p><a href="nginx+06cbde06-9e97-48ae-9c34-0d26c84f6d2b/nginx%20f1d22612-d5c5-4f80-b960-eb7f30f00c4d.md">nginx</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/Tools">推荐软件</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nginx"><span class="toc-number">1.</span> <span class="toc-text">nginx</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNginx%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">什么是Nginx？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Nginx%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">为什么要用Nginx？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88Nginx%E6%80%A7%E8%83%BD%E8%BF%99%E4%B9%88%E9%AB%98%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">为什么Nginx性能这么高？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%E7%9A%84%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">Nginx怎么处理请求的？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%9F"><span class="toc-number">6.</span> <span class="toc-text">什么是正向代理和反向代理？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BC%98%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">7.</span> <span class="toc-text">使用反向代理服务器的优点是什么?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">Nginx的优缺点？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9F"><span class="toc-number">9.</span> <span class="toc-text">Nginx应用场景？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E6%80%8E%E4%B9%88%E9%85%8D%E7%BD%AE"><span class="toc-number">10.</span> <span class="toc-text">Nginx虚拟主机怎么配置?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="toc-number">11.</span> <span class="toc-text">Nginx 常用命令有哪些</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nginx%E4%B8%AD500%E3%80%81502%E3%80%81503%E3%80%81504-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-number">12.</span> <span class="toc-text">nginx中500、502、503、504 有什么区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx-%E5%8E%8B%E7%BC%A9%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BC%80%E5%90%AF%E5%8E%8B%E7%BC%A9%EF%BC%9F"><span class="toc-number">13.</span> <span class="toc-text">Nginx 压缩了解吗，如何开启压缩？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E5%92%8CApache%E5%8C%BA%E5%88%AB"><span class="toc-number">14.</span> <span class="toc-text">Nginx和Apache区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#location%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">15.</span> <span class="toc-text">location的作用是什么？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB%EF%BC%9F"><span class="toc-number">16.</span> <span class="toc-text">为什么要做动静分离？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%9A%84%E7%AE%97%E6%B3%95%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84-%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="toc-number">17.</span> <span class="toc-text">Nginx负载均衡的算法怎么实现的?策略有哪些?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#url-hash-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%8F%92%E4%BB%B6"><span class="toc-number">18.</span> <span class="toc-text">url_hash(第三方插件)</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&text="><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&title="><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&is_video=false&description="><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&body=Check out this article: http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&title="><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&title="><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&title="><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&title="><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&name=&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/30/%E7%83%A4%E9%9D%A2%E7%AD%8B/Nginx/&t="><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Tom
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">推荐软件</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
