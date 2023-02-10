@@ -14,7 +14,7 @@
 <meta property="og:description" content="Linux三剑客sed 取行和替换选项  -i ：直接修改文件内容;-n ：只打印模式匹配的行；  参数  a\ 在当前行下面插入文本;sed ‘1a test’ 1.txt i\ 在当前行上面插入文本; sed ‘1i test’ 1.txt c\ 把选定的行改为新的文本; sed ‘1c test’ 1.txt d 删除，删除选择的行; sed ‘1d’ 1.txt s 替换指定字符; sed">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-02-10T14:43:56.900Z">
-<meta property="article:modified_time" content="2023-02-10T15:59:38.363Z">
+<meta property="article:modified_time" content="2023-02-10T16:03:38.907Z">
 <meta property="article:author" content="Tom">
 <meta name="twitter:card" content="summary">
     
@@ -151,6 +151,13 @@
 <p><strong>替换标记</strong> </p>
 <blockquote>
 <p>g 表示行内全面替换;<br>sed ‘s&#x2F;test&#x2F;test2&#x2F;g’ 1.txt    # 替换全部<br>  p 表示打印行;</p>
+</blockquote>
+<p><strong>元字符集</strong></p>
+<blockquote>
+<p> ^ 匹配行开始，如：&#x2F;^sed&#x2F;匹配所有以sed开头的行;<br> $ 匹配行结束，如：&#x2F;sed$&#x2F;匹配所有以sed结尾的行;<br>  . 匹配一个非换行符的任意字符，如：&#x2F;s.d&#x2F;匹配s后接一个任意字符，最后是d;</p>
+<ul>
+<li>匹配0个或多个字符，如：&#x2F;*sed&#x2F;匹配所有模板是一个或多个空格后紧跟sed的行;<br>  [] 匹配一个指定范围内的字符，如&#x2F;[ss]ed&#x2F;匹配sed和Sed;<br>  [^] 匹配一个不在指定范围内的字符，如：&#x2F;[^A-RT-Z]ed&#x2F;匹配不包含A-R和T-Z的一个字母开头，紧跟ed的行;</li>
+</ul>
 </blockquote>
 <h1 id="awk-取列"><a href="#awk-取列" class="headerlink" title="awk 取列"></a>awk 取列</h1><h1 id="grep-查找功能"><a href="#grep-查找功能" class="headerlink" title="grep 查找功能"></a>grep 查找功能</h1>
   </div>
