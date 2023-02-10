@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Linux三剑客sed 取行和替换选项  -i ：直接修改文件内容;-n ：只打印模式匹配的行；  参数  a\ 在当前行下面插入文本;sed ‘1a test’ 1.txt i\ 在当前行上面插入文本; sed ‘1i test’ 1.txt c\ 把选定的行改为新的文本; sed ‘1c test’ 1.txt d 删除，删除选择的行; sed ‘1d’ 1.txt s 替换指定字符; sed">
+    <meta name="description" content="Linux三剑客sed 取行和替换选项 12-i ：直接修改文件内容;-n ：只打印模式匹配的行；    参数 12345678910a\ 在当前行下面插入文本;  sed &amp;#x27;1a test&amp;#x27; 1.txti\ 在当前行上面插入文本;  sed &amp;#x27;1i test&amp;#x27; 1.txtc\ 把选定的行改为新的文本;  sed &amp;#x27;1c test&amp;#x27; 1.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux三剑客">
 <meta property="og:url" content="http://example.com/2023/02/10/Linux%E4%B8%89%E5%89%91%E5%AE%A2/index.html">
 <meta property="og:site_name" content="Tom &#96;blog">
-<meta property="og:description" content="Linux三剑客sed 取行和替换选项  -i ：直接修改文件内容;-n ：只打印模式匹配的行；  参数  a\ 在当前行下面插入文本;sed ‘1a test’ 1.txt i\ 在当前行上面插入文本; sed ‘1i test’ 1.txt c\ 把选定的行改为新的文本; sed ‘1c test’ 1.txt d 删除，删除选择的行; sed ‘1d’ 1.txt s 替换指定字符; sed">
+<meta property="og:description" content="Linux三剑客sed 取行和替换选项 12-i ：直接修改文件内容;-n ：只打印模式匹配的行；    参数 12345678910a\ 在当前行下面插入文本;  sed &amp;#x27;1a test&amp;#x27; 1.txti\ 在当前行上面插入文本;  sed &amp;#x27;1i test&amp;#x27; 1.txtc\ 把选定的行改为新的文本;  sed &amp;#x27;1c test&amp;#x27; 1.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-02-10T14:43:56.900Z">
-<meta property="article:modified_time" content="2023-02-10T16:03:38.907Z">
+<meta property="article:modified_time" content="2023-02-10T16:15:52.457Z">
 <meta property="article:author" content="Tom">
 <meta name="twitter:card" content="summary">
     
@@ -143,17 +143,20 @@
 
   <div class="content" itemprop="articleBody">
     <h1 id="Linux三剑客"><a href="#Linux三剑客" class="headerlink" title="Linux三剑客"></a>Linux三剑客</h1><h1 id="sed-取行和替换"><a href="#sed-取行和替换" class="headerlink" title="sed 取行和替换"></a>sed 取行和替换</h1><p>选项</p>
-<blockquote>
-<p>-i ：直接修改文件内容;<br>-n ：只打印模式匹配的行；</p>
-</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-i ：直接修改文件内容;</span><br><span class="line">-n ：只打印模式匹配的行；</span><br></pre></td></tr></table></figure>
+
+
+
 <p>参数</p>
-<blockquote>
-<p>a\ 在当前行下面插入文本;<br>sed ‘1a test’ 1.txt<br> i\ 在当前行上面插入文本;<br> sed ‘1i test’ 1.txt<br> c\ 把选定的行改为新的文本;<br> sed ‘1c test’ 1.txt<br> d 删除，删除选择的行;<br> sed ‘1d’ 1.txt<br> s 替换指定字符;<br> sed ‘s&#x2F;test&#x2F;test2&#x2F;‘ 1.txt    # 替换一次</p>
-</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a\ 在当前行下面插入文本;  </span><br><span class="line">sed &#x27;1a test&#x27; 1.txt</span><br><span class="line">i\ 在当前行上面插入文本;  </span><br><span class="line">sed &#x27;1i test&#x27; 1.txt</span><br><span class="line">c\ 把选定的行改为新的文本;  </span><br><span class="line">sed &#x27;1c test&#x27; 1.txt</span><br><span class="line">d 删除，删除选择的行;  </span><br><span class="line">sed &#x27;1d&#x27; 1.txt</span><br><span class="line">s 替换指定字符;</span><br><span class="line">sed &#x27;s/test/test2/&#x27; 1.txt    # 替换一次</span><br></pre></td></tr></table></figure>
+
+
+
+
 <p><strong>替换标记</strong> </p>
-<blockquote>
-<p>g 表示行内全面替换;<br>sed ‘s&#x2F;test&#x2F;test2&#x2F;g’ 1.txt    # 替换全部<br>  p 表示打印行;</p>
-</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g 表示行内全面替换;  </span><br><span class="line">sed &#x27;s/test/test2/g&#x27; 1.txt    # 替换全部</span><br><span class="line">p 表示打印行;</span><br></pre></td></tr></table></figure>
+
+
 <p><strong>元字符集</strong></p>
 <blockquote>
 <p> ^ 匹配行开始，如：&#x2F;^sed&#x2F;匹配所有以sed开头的行;<br> $ 匹配行结束，如：&#x2F;sed$&#x2F;匹配所有以sed结尾的行;<br>  . 匹配一个非换行符的任意字符，如：&#x2F;s.d&#x2F;匹配s后接一个任意字符，最后是d;</p>
@@ -161,6 +164,11 @@
 <li>匹配0个或多个字符，如：&#x2F;*sed&#x2F;匹配所有模板是一个或多个空格后紧跟sed的行;<br>  [] 匹配一个指定范围内的字符，如&#x2F;[ss]ed&#x2F;匹配sed和Sed;<br>  [^] 匹配一个不在指定范围内的字符，如：&#x2F;[^A-RT-Z]ed&#x2F;匹配不包含A-R和T-Z的一个字母开头，紧跟ed的行;</li>
 </ul>
 </blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">^ #匹配行开始，如：/^sed/匹配所有以sed开头的行;</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="comment">#匹配行结束，如：/sed$/匹配所有以sed结尾的行;</span></span></span><br><span class="line">. #匹配一个非换行符的任意字符，如：/s.d/匹配s后接一个任意字符，最后是d;</span><br><span class="line">* #匹配0个或多个字符，如：/*sed/匹配所有模板是一个或多个空格后紧跟sed的行;</span><br><span class="line">[] #匹配一个指定范围内的字符，如/[ss]ed/匹配sed和Sed;</span><br><span class="line">[^] #匹配一个不在指定范围内的字符，如：/[^A-RT-Z]ed/匹配不包含A-R和T-Z的一个字母开头，紧跟ed的行;</span><br></pre></td></tr></table></figure>
+
+
+
+
 <h1 id="awk-取列"><a href="#awk-取列" class="headerlink" title="awk 取列"></a>awk 取列</h1><h1 id="grep-查找功能"><a href="#grep-查找功能" class="headerlink" title="grep 查找功能"></a>grep 查找功能</h1>
   </div>
 </article>
