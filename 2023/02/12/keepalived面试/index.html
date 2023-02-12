@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="keepalived面试">
+<meta property="og:url" content="http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/index.html">
+<meta property="og:site_name" content="Tom &#96;blog">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-12T11:17:27.877Z">
+<meta property="article:modified_time" content="2023-02-12T11:24:06.164Z">
+<meta property="article:author" content="Tom">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>keepalived面试</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">推荐软件</a></li><!--
+     --><!--
+       --><li><a href="/categories">分类</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/02/12/Nginx%E9%9D%A2%E8%AF%95/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/02/12/Docker%E9%9D%A2%E8%AF%95/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&text=keepalived面试"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&title=keepalived面试"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&is_video=false&description=keepalived面试"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=keepalived面试&body=Check out this article: http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&title=keepalived面试"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&title=keepalived面试"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&title=keepalived面试"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&title=keepalived面试"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&name=keepalived面试&description=Here&#39;s something encrypted, password is required to continue reading."><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&t=keepalived面试"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        keepalived面试
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Tom</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T11:17:27.877Z" itemprop="datePublished">2023-02-12</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="062a099aec7410cd0aa2f3ca2f2c71d7dcb10849bef1e40ba9f4eccb92899e96">67d96008bc3767c9f5ebc411eab2151fbd539459cb616930a22835f1e074adf44f26e05cc84a65c633900636d7c6e499d5ddf90fc855939cb303d0f8d6be2590124a0be5a77a8a4804356732ca92b245623344e63e748358916d6e5cb8c7ca732adacc2bcceb2dfb01b4787e27ff2e53d4b681f3dae236b4561bbaffcb7d03d9bcf18f5437a858acc5b78e5d75f4af7656f12f7c2f13084cb712a38928272f0ea196dd93b76ed854fe83fa534c54704591bee78ea91be6397add9db798c012ce86eb597db80a4082eca61fe976319b382e2aa024c08ed1b995a6541d64c042d8c9ce59184d2729ca918e2b6ed7f48c3c428e5163591c0be2e7aeda44dc0fc2c086480305b238ad93d65812472dce9aa901f7e565fe31f010597558eca8c58b515c3cd9d970dcc6540456edc99a25f4f83133e2c56a19d184aa47694b5cc8047a1d3f5097a5575aded209a0e894de8bc1794592037fefcf69b8fad1aa32456dc69710244d8989993e485d9162878824ea686e0c37a962a73fa0f2b3c4637283e1b316cdc0cde6d432ac8ee9a5301f001780eca782cba2d5ef8b4a9c32a80b3d2dd366820b1420c043b7b57e5f978b512b1d21cf765daf3133ea7bb4148acac8786c879b91aba411edc0e355654d3708fe713b7ec08ab889a8b4b25f492a5eae6e6a277b9431dcb0fdd574ad44a9496b9698f5dcf9d5857d7e5f8c5008550eb0ae48e04e2fdb75f4db379c6abd6b93aebc5fc1994524c92a4ba8355d3793772e6dbae56b22996620104b41d688e9d79206fb6d5343ecd442a95e9ee7f2e68d021c3e55d8c38d95ab80855c45aede5a7c0aa5a59c2d6ea7216276ed22693e905516ff28cbac3aef95983c980c1e302b955ea7248941273c3e521c534658669f41655b1dfa635e9fd853c391328a18079410c7c15b90c9f6fd6318a48dcd14cca03eb00345001b0dc22681a23d121607bcc8a2d7fb27ad65e315068b35b75a937ff15ccd991bc9fb6f9aa412f73db198954a42a4475fa44b4fd54ceeb21fc8755203088b8db43cf2b9d2465476c2db7d178d05a9f94fe1cbfc1a17eecacb0b890f617e8532b9f90aab2ef82890d8817c9e5cf50fe7f4bdd1cfeb4c7cbde7e594910e6b07eb7111f3df650acb70be15cff35288db7b092ac8159020e3830d146b134ca53f8292b77dbaaccc9d86116112a3e43261d91c16d98c5e8bd267a4414013b888010075ecce6cac00a2277e9ff25de355575a40ddf11abdc37ef4f295fc535e14dd019587dfe3cab14ac9a737a6f63c612a6c5f5ce1d609f0e4e538416879725c72cabe7cf47a12398c1a991ca2ea6385a6d882d7ba42f9dbd0f30c9069b779f2d2e426544515dc596df65540cff06ef90118e4ea7fd36337dcaad3d974894345e3591ffa1328aad49d19db7380201ea04d97c4626eff60f4102f25b751ed8e454c703491eeec728c3d5c363bc6c457020e85658965da7b9192844348efa50adf3c449d1a0e1ad72cb92563d265c41139b682564b461c67db32c362d2e9a5a57a82c5c479ac17da909f3370d39a2f5c8b415520cde05ef2f35db9a3e0ba3d2ad7e929e12860ae3c8535da5b569ccae00a6dc2d1e430d9344fe505bd203e1fed5e8e5503be73e8a00e0030ede76d790e305b7d7e0fdf6f824c35a5d96849db245b98f901d19d7f06a204434b687e4f7ad2f60d8f6757c2e387a111c69b53eb75cdbd59595bab3c134cea5c9024e59a106038562306ddf545228c2f0814a8141f74d0a2b594774c14560ecfe13cd6b9f052101681624ef1e6e6650d22d18b9e447d29ce3f3db7b635bf09b79d7a061400a075e6867dbbdf086d0f59f4bef0c080a6ca52ff999be5965cca184df9d760f25104270a3093c98dbbb9050b047afbf33b73e33876d3251473c493585cea460b643c37534e70cc1de3e53c0d88950853f67f21c6547f72b7617cdcc7d5184764ffdb73d902b303a6fc2196de2bac985729022e2365b21adb2b85ef5778d37694c3bf2d72bcc003ef47fc0f472844aa14f99319a6a512fe2643c291f6bc5f754aa37c93ceb413320579b226a046019ef57b0310da714af36600bcd69acb76571a175416e0a6e74372b493af7a12e5cae3947300f51d81c433fb477f18aafbb07fe581d2d1aeb430ac3e4303c57fe46b29489384cbffa185da07db2c4078ecb2b5161ce350ba384f1e68df2d0e91d415d559eaf468771e440a217767bc674437cc266809fe503d35ed7937f4c0849c70129c5d541251e557eeffa70b6d3773f9877f351875198632b5474a365faaff29c0db5ffb48103fbe9942e1dc715d84c238e3216a470e3aa8bf9c3ac7d33d195bfe6249b4b08bad82cef33c93f0316289196a86488b6279d8fc6265d7463a042c5e9ce3f87ff9a946caabffff681545583e728aa94bc29f0068c8f0f7b7a414e8e598deef6ea6e6026c5c8a8a4ce597c3108f8b5f58f984fe16110f2c1106e435c4161c87b424b499ec744b12c43f660cef8d7cd924f56999f03bec0dc7e98b43215b25a8d98e3b33b6f2483ff94f618d1ba03973bc517a780d48c97ad979d13b12302b6505af5a01f8ee1594efe1cbec5cc0debc86e163b3535273e043229b9eeba00c87b0916d513c175aeada9d9a2798d968af9c946842f7c9722557a8c33b7804eadd1ba8abfb99d44a9715120615905a9d2809470efe272526802e9d0c82ff4ef39a3344c121bb182ced7e4f8276c9</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/Tools">推荐软件</a></li>
+         
+          <li><a href="/categories">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&text=keepalived面试"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&title=keepalived面试"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&is_video=false&description=keepalived面试"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=keepalived面试&body=Check out this article: http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&title=keepalived面试"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&title=keepalived面试"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&title=keepalived面试"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&title=keepalived面试"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&name=keepalived面试&description=Here&#39;s something encrypted, password is required to continue reading."><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/02/12/keepalived%E9%9D%A2%E8%AF%95/&t=keepalived面试"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Tom
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">推荐软件</a></li><!--
+     --><!--
+       --><li><a href="/categories">分类</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

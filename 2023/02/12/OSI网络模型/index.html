@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OSI网络模型">
+<meta property="og:url" content="http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Tom &#96;blog">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-12T11:17:27.882Z">
+<meta property="article:modified_time" content="2023-02-12T11:23:59.278Z">
+<meta property="article:author" content="Tom">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>OSI网络模型</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">推荐软件</a></li><!--
+     --><!--
+       --><li><a href="/categories">分类</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/02/12/%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/02/12/Nginx%E9%9D%A2%E8%AF%95/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&text=OSI网络模型"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&title=OSI网络模型"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&is_video=false&description=OSI网络模型"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=OSI网络模型&body=Check out this article: http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&title=OSI网络模型"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&title=OSI网络模型"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&title=OSI网络模型"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&title=OSI网络模型"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&name=OSI网络模型&description=Here&#39;s something encrypted, password is required to continue reading."><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&t=OSI网络模型"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        OSI网络模型
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Tom</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T11:17:27.882Z" itemprop="datePublished">2023-02-12</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="9080a86fc33eac961492860196b690774607c5ddad1181977e1bfb22fb1c5ad8">67d96008bc3767c9f5ebc411eab2151fefc9f69191d487f9dc73a5504c3fd89c78a14e09f2082244f3b77f1aa07e5fb5ee80c9db43a6d6a6b5baaedcebb285d9c5b6d7af9fb5cf1b9c7795277372a93c49189a59cde2f5de04c04cfbec1fa007f81e2f8190dd425a58a2f0b01d5f00a934c88d14e75dd1d1f206fb144f68f75404d4f09b79e079541d8131f14cab153552b4c81ca5bf4bbe36f856db74f60558182c78c69b78e82910c5ebe0dabbc7242cacea0637b317cbea13c56a565acc99b0955fe3237aaffde3fae984ee22cd70e74e267a4b609fd1de8d278eac7a8e8e69ba460ce26963eccb8476382a3467c929f652742729d5be0c729144b318a5447a76ef9d3b076d78adc5a1ecb6d109872203c4fac1afab5accdc722400cd8dc161c6aa2f7bfb820281f138c4fb877a155d1e4205dd0af4b6020001210f0fa661d45b976965b875e8d0b921a6449ddd3c3a437eecc857bf2a5c8f1e8edf7230bd129fd8a900b0fe79f9641b963b941bf9f7c5e716a9c78ecdecb4216d54ce2f7a8fae46f0fcf708600e470fa1d78cf4f3ae94037d89d62c54367ba71ab7d0098fe59b2e883f77c80a7d8ccd70e894638a8dcd7e9ec6bc5695ad9fad7e4af24af5a60504132d1837a97e5a4579005f1ac6998563a95f01b3f503ab4c5f1d737c783d4709f4796d33ee80f80f26ea73117b5897dfd1a8681e50e4f4bbf2689b6813ca47169a84be83b61caa29b8b77227ef0884915cd31d51c25f1f491c057e429f240f668886103eafb6aecb35b6e4d943c6d3aa828d756c6ffbbebb9fa44f239f3ed414191445bfc8b38f5aae3a3d27ffcb0f0d45245bc413df90a56b57890e97bafa3012c2d097c7cc15372ab7b761e4e98d4617cd68fb6ad27655c161eada4316cf6bece4681d51c966f268e4dabab8b1d33235bb857608944c93def629c7f910457952dda851628e107375c3a3b03423881abe5cd8acbc7f7c6c1225a79d5e40c636f22db4ce75e410d5be8542ddc5fd2cb9d3f67377026527f7bb28806c127293c9a4c819f282542501d562768cb3461a2c595691e9e1732dd366e94f4c7367a8c399f8bee415aed60904d5de3db1e8c6bf0cb76fa62315d42d026db960c31a972a16f6258bdd77af37f1eaff1612b9a6dfd8c68882d8abd0a4762de070879b558d3f86fc25141fd87459608c13c6822df5bf0d63c9fa8a417a0867f274efa2298f811981ebf8d74fde01245eced5fc6d05a839e49fd24b50e3d564c8b812a50abe4042955d06e14aa777fcfe3574e897e9972711a7dd3b60e3b8665e3dcebcc48200327e2729899a98080b93a8543cea449111dadef849de799fd753c11c56f8bb9b0f1491a7349945aac4e3e242f8ac590641cffa7f1133946e0432eefdd13346a7ccd10d6a812bd79bb8501b209de23e0a321d1573be24b85f06d61599aba82e3b30df3243ba2f37fa167de84bdcd332d8745404721c4c018e05f063dc67b3f6dfd18317608923c9dd254c0f35f0264bad00862e667d6fad147782b6bb3668d6742636314da50142e3041bc5f47d7be6e285c8f5c7212bbde80cfd15cf440ffe68f05c87bba5b07d7492374acf9a219eee0ef27e0ae916d4795f2969c0fd727485ff120d7897961dc68a87f71f82721887f2f40672d4138c7de24b2de8bdd383fb94e1a58bd9af57cef11c83ff594c7439328dc6e58a579c0cc00d6a93847d68a9d89bc1666c43e69af682d7942eb5b1ba874f87db5ae8851e005e9375018efb29d7ba239dab016cc03120f2339fb103227cc1c708b69ba39ccc90908f9a0c8f391b77f1256813a3a10bb3ebf7411da56978b0f31a3d4e12e67ba4343686c58d9e4311995c64eda70237dccf655cbdcaa12047416072259e83a443e7f36d86506b48bf422f572229c1ba39c9e5b06ac2baa591623d4256f3715e5ac1ba1a33856043be951890e7b079d5e65bb452a69e7c993b0b955509a5e93a2bb9098146a896a7a52a02c25787c6ebec9b7c37e0c07772c9f7079c68fdf7ed763cabc7b01c76f996060abf0f6e143b7360e0ad291ec7601299d2f042b6ac36c7a9dd0ae8537eb550ba344d861982f8c69fa7b160582556b93119ed8246a6d1f766c3bf691f84a6fd9264c7b09fef56edc1668791e44f528d3ff27d0f65176adef87a0a2dd5f9c6e01e3e91d31925dcffc1ab015470edf03bc8c299f14b623bbfa6a5df0a85025def132e9900d32ac17a0a427286f24fbbbe4186120cae6415d7e6652b2e944941c2804877029ab738616c56196a1ec6c24d056ac25af7c8063887a004aa684c0a02bcadbe5746a366b58123e48aec9b5267292d543cc3f51ea2b852310612330dd8b4b60fa932a3bba528c8482a160ae5d2694ee38f47c01138c5fab0a888954088be828563f3ff2523df49ed4b7d8bb5343485e6d030491e0cdec55cf182ded9c77ceb5f5a70c98d5edff50573429975d6a70a1cd4826732a78b9af0820472a0bf8be5570c4784d400e5edcd6f1cbfdb0f34e22f43169f38b35e898a884cd314bbb8c116ccaf78107bcb942ec1508d2ef18548b51aaaefb415b734e8730e803fbd284b11947a677683478950845ab21db3ea2a0b65fad1c18d38b788c3265f614326f5b9f5d1413752743727a8672a3a7621935c87a55dc9be4118c29a88478c3f8977dd74d91f1ecfa949c4a7b1dbc0847acb5e739c5d268dc9d7e5d8fe15773c7aefbf888e5b284740dd6469a61f751068acb953811bbba0b8f69cf0d7220049b4ccc9bce858770659916045879ca70a8680d279001d03a68f5f30d47afe25d15140b2d85e9e60eba286d5c7a800b46c80efb663da9bc460d5798233ff5a36f0f937b4c7969ea732d9bfe3baa0ba690907258601435227284e6bf9b80a4c065a67d6a760a2f74fce9d420183bf7b3302446624d9eed877990deacb5fce4057fc296af95c084b9623c8212204fd45e3db08e2dcbd4e2504b9a3022977e80cbd0ce2c668241b1dbbd7fdbfc3a374a93118a8162a4b6874f73a2ccad8377ba5b9357aeb1efe88842bc5725e47a300e957d7a76d29dc80a20e46fc8d877e91fca002018c035bfbcfc5a83b51a37c23eec8a36d17fff0e0ac9d4a41d06a1463006fd0373ebba40cd5cfb8cd9b4f2eb4471e4f38400e981b228410b58392aa0a2e2d43ded6e733e46937b7aed195a614214d7d9fe11af4f5d0a0f87273c1ec9dcc5eeceb373ea5a8145c329d48f6e30530c8374852781e7a00fcaddd7dc4abf52bd060a44a43019e14db598e047bba9f0dcd95633015247cb5eee19dbb88ca86f040135d6793b7e7514d037c2b443e19ccaf55b806d41cbd78d1a46169fbf23de9b291cb22dad81b707790019f62b13769ec817f7d0a2e4315722ba14afe8aaa2471207848cbd076611a6cebad4f60c646472b5adb9ffde116a9fd60f220618294b90e5b201dbf1712d960859f5e6a75476bbfa906b7111d56f55f653e7b1f9caf26b5cd62db0251051ab13ab1dab7bbb2de4cc521f7ea14e79259fb6fe03e449944391031203a194b2e63a7ceabfbb9ccfb476bae0c0cdaae15edae387c1cdb87f0b472610941f34a36005a1d862832cd92d7916e257f15ecc363ababe8528e9c64ce0d9dd1ae77662348c11206cd401268f1e3141003d0d0cd4bd5c854a25adaa826ab7753a0a7e4e1ccf909b2b2f0179e8c2c1ed95a50cc901f019a4cf4b4d2cb3759e15eacc11b20571cd2cea363a874500935727e5f03ebd3887c090616a2f6ae68feb1d191bd0433a46a1796447c60b3b899163e4ca8ec0b6255601db80e3f0f45e1563883b0f308a0f71110ae7a6a3f821478cf8701350958d3f123599613b59cba008dc21eae03a29e81e2f8a1759593255a0c2c4cd65f34bcf6c521745e1be06fa74d5d8fde3954c23de50045b37544612260e6d4d272db6f0f54336f3032bf4a841d8f713310486deafe7e85afb36581505628b448c4ab2e74f51cd7af7ceb09912af5f12318d4490aa4a1d2359cfdee9e17fa0d0ceb3700f9581c504f38419a38837b6210462ea8a2e0e0b3c7046dbd5bb9ea42033e0312496ba03b0e3371af564424626743d76949db403a2ece3651118f88a160ecf8598853ea7947df6cd1c8be66c22c382cb704a1c7e8241d6598ce48cbb9e122ddb353bd6023783cf44fcb123dbf83deaf21e8222b997df2ae506d188f3a115b3687be407a42b0fd9f68081d4bc973b8a9d4cbcc5faf84bd444522471ccadab7c2beabf63a94463c3c2c0a54a7a1a664a104e2761e019c036b3d8a53544dc81f97069cba82b805b0512c223f12e075fe292304de7524078cd1b2586f886c5dc13dfb5c95f6ec5e362dbe00af8b0573a1e707f3aedd1b119a5c84d41199d66d88bd11cc272f370dd3328c753cb18cd5768724b728fc393b36ba012b2a846f67651dc1bf919bbe20c8b8653a247183531086e4ddf28b69ad75daf0cf41c169347b708e46b2826a7e5b9766f032a834f8d0fa01d0a620db872ff3d96835f67bff5963c981c77803557a61310098ff7d1a80ff2406cb9d3080b7c5251e5b53b7f08b58dd56c792e571d1bfa4641db8b083c1d4a092ec917382b97e55e408bd4b33ce20d84541839bd5d990f1e45082cd752b5963e4b87bf6fe5e88e4cfcbaf3a3c73ade0aad4de3a267b799dc8b538ce97c9ff4e88725f795a7840d75ed58f5bc310994dd9e5f4dae80742c44a0da487acb5ffdc76fb7cb5b2086d7e1ba564917a293d02f31309a37937841251192cecd0de767ed0c661c5f7db9447a264c08f7dd69bfc848f5e73bff94ea55bf27ab146e8b2249dbe85b019c9959fe71e8041ff54a252e8fffe9dc02e7c093f998933a73280959d2e0522f52cc4ebe8d1f2b78d5f991687f6e1425adebcc3f7498a782feb32239f0e739009b688f9353081ddba2a25ede5a96446bc37de20761cafb5d085e255b6c8d41a1b03d99a30aedc753ade730fb610115254480669c19f9c8fc48adbf144da13e570472ba67c9e869a1b1e42f628e5fa0c6dbdb6e1ebcf61507a611214b0e7e57526933d78f8f17e562b9a6b980bba4bd61e36bcc0d87e1193c3c3fdc26603ef550612fd8b135242f3156fe578f2587a2220d3ea9739485b8d9bc76e9b2866f76dcbfa00d8775f3ea2fd3383c21f5ce4e13a56ada8db7cdd449ddec2e172057caabcc99f9a051c98dfe3c0093577bc9893661faebc3217a41a36c84b50ba96d65143d8648f68cea3c8b99df9ccddd4c40bfa7192fb5b6ddf91f3ca8783fa64d06df8f836d921c0d043fb58e6ade152ae7fb90772c4c0b75fc5c06d338c30fc849fef2c3f9f72abb1cb85f8b78a2f74126896794b61924255bf47b584621dd3f14c0689cacf0971332b8c39ef00983678e46612d231140c57207424586be4b34995be5858b4e4c755c828d3bbe5f1b0e245f22b693a28e67e4c4fd965d531b8980173ca86b63aabb314c76125b0e359b9078ed7db1f1e6f72af50155eb1e1b9e3eb47a029601ba1316a9f8ba788551a54d8815cc9b5c4d96a2cfa1c4b4a2763d9f410542e62dfc3b6501238f1cd8cfe30a6d74e98e033742d64238724fcd0177db4b82412ea68d0ac91b61332f9258a1b6867daae6c9e92387058091fcfa0b1b37c84cb909fd06db62786a2f96ff3618627f565983062b332299db52979630a6c9738bc44d042afeaefe869ae66ae3385d913073b305b8e6f2860852792b39603a4310cc274a538cf1aecd419b8796bd9d9db7a5f81c83888732e97f23974e77080a8475c9d56341459967961ecd71a6747fa55368833feb88cfbd5e4d040c6b87a7bfc12d486372540ea0990dde58556e715ac15cf9d68dccf19adfccfc7f4258b9230198ad31dfcd7ba6b33c20dbe54f4bc2a8d691be51e10284ba24270fd0465a755ded0d5cfb488eebc50860f884c5c2e356d71f2273f36fc13f6960cf52de517395a30d95e61ad42086034541c3ae92cf5f5b8dab941ffafbbb46f83395a2b21bc6cba2e988a63f559391f41915e86cceac8e628240bd423f14124efe8420fc16a3a9a82bfa46b8d6eb9e7a8e41429a5a601dccbb11c1a190b390f6a82405e5d5bd62e1f79a0a4d0ff519fcd9e3ff77529cef4f3eee346300fa46a238a3ea398e08993eed6c87ee3abaaf1ee0df9bcf4730135da17ac8c3d18fa6f2cd0e0e045d74174b7878cef14b75ed04a59e490047cb817b2927421c9673b282cb70b4d3ced7f76c4acc8bf13488fa3f9b3c4d1fd32bd604a8f18025ff7673494960ec02f06c7a15dcd797210881e7d5705ace8675be629c8d9297ddb83859027da673013410b6251b3e34d208d31f43fc84eed4ec001bcd7b31de714cc43d8cdf0d800077469661beb35b616265a53d2908bb7b1ed413ecf7fd930291f74c317c855f8e5e86c26c319132df841b2d8c7fdf58a5d98143c75da1a26369d1876dd70177dbc1da9df4a48f9ef680c5f97f0464656f85044a743cf1f35768b05b4a538f4c082bd4304c9e6e90178c9f4add9bcc06c2206a66d8de9440a93a6b6adeea7b56f4e3774037a3be61a48d3c24c04b68f782b2cd140c9b2893fff9d3f6be8ab4eed35b27ccfd7986ef8cee9f22d83a55f6ce6e6143a41f218cd54b0d151d10b6814c2da33adc175adff72c78feaf9b3912a681e163dae07b91507dc58c64e32a126f1f8a6438e39420a957777901022acd70c5df4083c45d179236a46a30f97d462d25317b5de15b147645fe2b6a8cbabb059abc7e30358d58dc43dc419cd8d83c80d52cd9a856546ee159fca9c9429be3554507e216e55673fb8b9432bb8e13201f8ad040effc737f2922bd10518ef327a8aa3dc621b33a2695e3e258633247b0cdc26dc56958030d2f66f9ae1084bc2f3206bdee0aea78f59835dd47709aaa262d907bd3b35024008ae54d9e3c99f71ea5a1597fe7e0c678b91c66682ed26c90da8ab648bf0e8ca7b2d083871f4dd5f2f003512f63ac320f2eb99b3c7289bb512c2026c0964b8a3b537c94bfc567ecfb9a535a380c34e3dd1a302fd3f45ec0cfd430c7d9ed483de6618526dce3538324d10e97ad7b9d6e56b8480de78fa061610befff30515644f82583d6bc0d8560b3061c080e7df227b5da0633864311820537bdf610f7a1bfb7285f3d451bf33405aa363f683693f5bd5a9281f525ce490577ad11123d9cc8de45394ba9cab65061ed56d25641eba2100252e01af9e89cad0b22df992aef70a9bbb923ce3aea96928274986bde077fc4b1ff7a02bdccf40ad01aa81c83d1f232cafa0c8d9f27c40e80dbc5e6e12629d1bc9ad415bc41f7d4cadeace029c930991a4e12798bfb16160bf6bacfa28e45e7f29f3226bbc2ab68505509d39fd1f838dcbb89662f8628578ccce989426053a89a777bd9e00579a05484d0bccc1f67aead5d003f930fcd89b68c152da1646bd8920258034c3ed4a78f358f3d6ea75c9975d592853f53c1a9f811d7a6debb7da8cbbfdccbb1652d6d8ff76bb9a2ac30d3e6ede25b3880a63d88651192d0ebd3670dd8247521b8f685b27e2275d6fbdbc62cc482ca84ba1ca31be007e28e15302feb720966293d50b800bcfa26b098c1e0c0ba4b9bcfa88706dc15aa2dfcb215ac9ec2fe3074e8c1c42719b80b9aa68143ac3a4b2ef50e28b350a12312033b741d541c0348956ceba3cb404539a6a6957599f82ac8ba5d58564d6e4a0f1e9e96c3e5b3d1497713aa91ab97cc35f112b709f888917bed2aaaecda45e9f8ced26e4ed778a6f0617e4dbf873fa63e62f50a56d5606548ae30a381f202a05db5c1afc87952588830772a89735b638376913c6dc456ae228b1802090a39a914048b247c2f036d6e82c069a011507fbc192d7b64c593df2f569b8d63a0eeb8b21dd3710fdee0166262f19a19e25f321d64d5e9bc01a91fa1ce8a9291e8a0d2dbc688ef28733898440e7059c4f597cf9f1c80b70c304da7f07fdc52090fa478e17797103d794539971162940d7cc1827b2614132f38f4f38678233edf2042ce8a0521f4c601ed1aec5b9c70bcab3d248b8d80ec48499dc468c9d9e7f91b364b093b14c8ae23440438eb6a51598c7231d4d5ec1a943b1d12ff5bc8f201164d5f4cce52aa78159f23551549ac647ef9b11635ac746d13c47af6d62eb5994bb3d26304c6a6ab73b4e23131e49b9268455824fec7de07b8dec8bf72dee09ca1dbf1452c9bfab88b6a36cb5bf45f6461c3b53cfd7a9f7a57d418ee9</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/Tools">推荐软件</a></li>
+         
+          <li><a href="/categories">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&text=OSI网络模型"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&title=OSI网络模型"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&is_video=false&description=OSI网络模型"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=OSI网络模型&body=Check out this article: http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&title=OSI网络模型"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&title=OSI网络模型"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&title=OSI网络模型"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&title=OSI网络模型"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&name=OSI网络模型&description=Here&#39;s something encrypted, password is required to continue reading."><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/02/12/OSI%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/&t=OSI网络模型"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Tom
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">文章</a></li><!--
+     --><!--
+       --><li><a href="/Tools">推荐软件</a></li><!--
+     --><!--
+       --><li><a href="/categories">分类</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
