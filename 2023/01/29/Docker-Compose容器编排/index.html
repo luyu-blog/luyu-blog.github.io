@@ -14,7 +14,7 @@
 <meta property="og:description" content="Docker Compose可以轻松，高效的管理容器，他是一个用于定义和运行多个容器的docker的应用程序工具。在生产环境中一个应用肯定有很多个docker容器构成，而就单纯的docker一次性只能实现单个容器的部署，为了这个问题，docker compose 应运而生。 安装官方下载文档 :https:&#x2F;&#x2F;docs.docker.com&#x2F;compose&#x2F;install&#x2F; docker默认不自带">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-01-29T09:53:40.000Z">
-<meta property="article:modified_time" content="2023-01-29T14:41:10.297Z">
+<meta property="article:modified_time" content="2023-02-12T15:04:07.375Z">
 <meta property="article:author" content="Tom">
 <meta name="twitter:card" content="summary">
     
@@ -151,7 +151,11 @@
 
 
 <h1 id="使用和管理"><a href="#使用和管理" class="headerlink" title="使用和管理"></a>使用和管理</h1><p>使用docker-compose需要在目录里定义一个名称为”docker-compose.yml”的yml文件，这个文件就是用来定义服务配置的之后可以使用docker-compose来管理这个文件里定义的资源。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up <span class="comment">#启动</span></span><br><span class="line">docker-compose restart <span class="comment">#重新启动</span></span><br><span class="line">docker-compose stop <span class="comment">#停止运行</span></span><br><span class="line">docker-compose down <span class="comment">#删除</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up <span class="comment">#启动</span></span><br><span class="line">docker-compose restart <span class="comment">#重新启动</span></span><br><span class="line">docker-compose stop <span class="comment"># 停止，不会删除容器和镜像</span></span><br><span class="line">docker-compose down <span class="comment"># 停止，并删除关联的容器</span></span><br><span class="line">docker-compose ps <span class="comment"># 正在运行的容器</span></span><br></pre></td></tr></table></figure>
+
+
+
+
 
 
 <h1 id="YML配置参考"><a href="#YML配置参考" class="headerlink" title="YML配置参考"></a>YML配置参考</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#全局配置层</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span>      <span class="comment">#版本</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="comment">##定义层 </span></span><br><span class="line">  <span class="attr">app1:</span></span><br><span class="line">    <span class="comment">##配置层</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:1.26</span>    <span class="comment">#镜像</span></span><br><span class="line">    <span class="string">ports：80:80</span>         <span class="comment">#端口映射 </span></span><br><span class="line">    <span class="string">environment：</span> <span class="string">aa=bb</span>  <span class="comment">#系统环境</span></span><br><span class="line">    <span class="attr">volumes:</span>             <span class="comment">#挂载卷定义</span></span><br><span class="line">    <span class="string">networks：</span>           <span class="comment">#网络定义</span></span><br><span class="line">  <span class="attr">app2:</span></span><br><span class="line">  <span class="attr">app3:</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
